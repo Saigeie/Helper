@@ -1,4 +1,5 @@
-require("dotenv").config()
-import { DCTinder } from "./structures/Client";
-export const client = new DCTinder();
-client.start()
+import { config } from "dotenv";
+import { Helper } from "./structures/Client";
+config();
+export const client = new Helper();
+client.start();
