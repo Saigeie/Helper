@@ -7,18 +7,18 @@ Helper is a mutil purpose discord bot that is designed to bring management & ent
 *This is in no particular order*
 
 - [x] Add basic files
-- [] Verification
-- [] Tickets
-- [] Logging
-- [] Dropdown Roles
-- [] Leveling
-- [] Auto Mod
-- [] Join wall
-- [] Panic Mode
-- [] Lockdown
-- [] Moderation System
-- [] Economy System
-- [] Premium Option
+- [-] Verification
+- [-] Tickets
+- [-] Logging
+- [-] Dropdown Roles
+- [-] Leveling
+- [-] Auto Mod
+- [-] Join wall
+- [-] Panic Mode
+- [-] Lockdown
+- [-] Moderation System
+- [-] Economy System
+- [-] Premium Option
 
 
 # Authors & Contributers
