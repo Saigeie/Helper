@@ -22,6 +22,7 @@ interface RunOptions {
 type RunFun = (options: RunOptions) => any;
 
 export type CommandTypes = {
+  owner?: boolean;
   userPermissions?: PermissionResolvable[];
   run: RunFun;
 } & ChatInputApplicationCommandData;

@@ -15,7 +15,10 @@ const globPromise = promisify(glob);
 
 export class Helper extends Client {
   commands: Collection<string, CommandTypes> = new Collection();
-  config: Config = { colour: [248, 200, 220] };
+  config: Config = {
+    colour: [248, 200, 220],
+    ignored_requirement_servers: ["955201445748170882"],
+  };
   constructor() {
     super({ intents: 32767 });
   }

@@ -7,6 +7,7 @@ Helper is a mutil purpose discord bot that is designed to bring management & ent
 *This is in no particular order*
 
 - [x] Add basic files
+- [-] Information
 - [-] Verification
 - [-] Tickets
 - [-] Logging
@@ -19,6 +20,7 @@ Helper is a mutil purpose discord bot that is designed to bring management & ent
 - [-] Moderation System
 - [-] Economy System
 - [-] Premium Option
+- [-] Auto Responses ( Member join, message trigger etc)
 
 
 # Authors & Contributers

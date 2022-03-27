@@ -1,3 +1,4 @@
+import { GuildMember, TextChannel } from "discord.js";
 import { Schema, Document, model, Types } from "mongoose";
 
 export interface Crate {
@@ -33,8 +34,23 @@ export interface User extends Document {
   items: Array<Item>;
 }
 
+export interface Moderation {
+  moderator: string;
+  date: number;
+  reason: string;
+  channel: string;
+  id: string
+}
+
 const schema = new Schema({
   userId: { type: String },
+
+  // Moderation
+  warns: { type: Array },
+  mutes: { type: Array },
+  bans: { type: Array },
+
+  // Economy
   bronze: { type: Number },
   silver: { type: Number },
   gold: { type: Number },

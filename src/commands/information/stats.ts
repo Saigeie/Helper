@@ -36,7 +36,7 @@ export default new Command({
               },
             ],
           },
-          interaction
+          interaction.member
         ),
       ],
     });

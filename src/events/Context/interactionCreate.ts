@@ -11,7 +11,9 @@ export default new Event("interactionCreate", async (interaction) => {
         content: "You have used a non existent command",
         ephemeral: true
     });
-    const userData = await Users.findOne({userId: interaction.member.user.id})
+    let userData = await Users.findOne({userId: interaction.member.user.id})
+    if (!userData) await Users.create({ userId: interaction.member.user.id })
+    userData = await Users.findOne({ userId: interaction.member.user.id });
     command.run({
       args: interaction.options as CommandInteractionOptionResolver,
       client,

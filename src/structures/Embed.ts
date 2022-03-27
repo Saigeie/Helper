@@ -1,17 +1,18 @@
 import {
   CommandInteraction,
+  GuildMember,
   MessageEmbed,
   MessageEmbedOptions,
 } from "discord.js";
 import { client } from "..";
 
 export class Embed {
-  constructor(data?: MessageEmbedOptions, interaction?: CommandInteraction) {
+  constructor(data?: MessageEmbedOptions, member?: GuildMember) {
     return new MessageEmbed({
       color: client.config.colour,
       ...data,
       footer: {
-        text: `${interaction.user.tag} | Helper 🤍`,
+        text: `${member ? `${member.user.tag} | `: ""}Helper 🤍`,
         iconURL: client.user.displayAvatarURL({
           dynamic: false,
           size: 128,
