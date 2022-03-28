@@ -5,6 +5,7 @@ import { Embed } from "../../structures/Embed";
 export default new Command({
   name: `avatar`,
   description: `🤍 | Get a user's avatar!`,
+  exampleUsage: `/avatar [member]`,
   options: [
     {
       type: "USER",

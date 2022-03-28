@@ -4,6 +4,7 @@ import { Embed } from "../../structures/Embed";
 export default new Command({
   name: `serverinfo`,
   description: `🤍 | See information on the current server!`,
+  exampleUsage: `/serverinfo [category]`,
   options: [
     {
       type: "STRING",
@@ -36,50 +37,54 @@ export default new Command({
               { name: `Members`, value: `a` },
               { name: `Channels`, value: `a` },
             ],
-          }),
+          }, interaction.member)
         ],
       });
     } else {
       let embed;
       switch (category) {
         case "members":
-          embed = new Embed({
-            author: {
-              name: `Members - ${interaction.guild.name}`,
-              url: interaction.guild.iconURL({ dynamic: true }),
+          embed = new Embed(
+            {
+              author: {
+                name: `Members - ${interaction.guild.name}`,
+                url: interaction.guild.iconURL({ dynamic: true }),
+              },
+              fields: [
+                {
+                  name: `Bots`,
+                  value: `${
+                    interaction.guild.members.cache.filter((f) => f.user.bot)
+                      .size
+                  }`,
+                  inline: true,
+                },
+                {
+                  name: `Users`,
+                  value: `${
+                    interaction.guild.members.cache.filter((f) => !f.user.bot)
+                      .size
+                  }`,
+                  inline: true,
+                },
+                {
+                  name: `Admins`,
+                  value: `${
+                    interaction.guild.members.cache.filter(
+                      (f) => !f.user.bot && f.permissions.has("ADMINISTRATOR")
+                    ).size
+                  }`,
+                  inline: true,
+                },
+                {
+                  name: `Owner`,
+                  value: `<@${interaction.guild.ownerId}> \`${interaction.guild.ownerId}\``,
+                  inline: true,
+                },
+              ],
             },
-            fields: [
-              {
-                name: `Bots`,
-                value: `${
-                  interaction.guild.members.cache.filter((f) => f.user.bot).size
-                }`,
-                inline: true,
-              },
-              {
-                name: `Users`,
-                value: `${
-                  interaction.guild.members.cache.filter((f) => !f.user.bot)
-                    .size
-                }`,
-                inline: true,
-              },
-              {
-                name: `Admins`,
-                value: `${
-                  interaction.guild.members.cache.filter(
-                    (f) => !f.user.bot && f.permissions.has("ADMINISTRATOR")
-                  ).size
-                }`,
-                inline: true,
-              },
-              {
-                name: `Owner`,
-                value: `<@${interaction.guild.ownerId}> \`${interaction.guild.ownerId}\``,
-                inline: true,
-              },
-            ],
-          });
+            interaction.member
+          );
           case "channels":
               embed = new Embed({
                 author: {
@@ -108,52 +113,57 @@ export default new Command({
                     inline: true,
                   },
                 ],
-              });
+              }, interaction.member);
           case "roles":
               const roles = []
                interaction.guild.roles.cache
                  .filter((f) => f.id !== interaction.guild.id)
                  .forEach((role) => { roles.push(`<@&${role.id}>`)});
-              embed = new Embed({
-                author: {
-                  name: `Roles - ${interaction.guild.name}`,
-                  url: interaction.guild.iconURL({ dynamic: true }),
+              embed = new Embed(
+                {
+                  author: {
+                    name: `Roles - ${interaction.guild.name}`,
+                    url: interaction.guild.iconURL({ dynamic: true }),
+                  },
+                  fields: [
+                    {
+                      name: `Bot`,
+                      value: `${
+                        interaction.guild.roles.cache.filter(
+                          (c) => c.managed === true
+                        ).size
+                      }`,
+                      inline: true,
+                    },
+                    {
+                      name: `User`,
+                      value: `${
+                        interaction.guild.roles.cache.filter(
+                          (c) => c.managed === false
+                        ).size
+                      }`,
+                      inline: true,
+                    },
+                    {
+                      name: `Admin`,
+                      value: `${
+                        interaction.guild.roles.cache.filter((c) =>
+                          c.permissions.has("ADMINISTRATOR")
+                        ).size
+                      }`,
+                      inline: true,
+                    },
+                    {
+                      name: `All [${roles.length}]`,
+                      value: `${
+                        roles.length > 0 ? `${roles.join(", ")}` : "None"
+                      }`,
+                      inline: true,
+                    },
+                  ],
                 },
-                fields: [
-                  {
-                    name: `Bot`,
-                    value: `${
-                      interaction.guild.roles.cache.filter(
-                        (c) => c.managed === true
-                      ).size
-                    }`,
-                    inline: true,
-                  },
-                  {
-                    name: `User`,
-                    value: `${
-                      interaction.guild.roles.cache.filter(
-                        (c) => c.managed === false
-                      ).size
-                    }`,
-                    inline: true,
-                  },
-                  {
-                    name: `Admin`,
-                    value: `${
-                      interaction.guild.roles.cache.filter((c) =>
-                        c.permissions.has("ADMINISTRATOR")
-                      ).size
-                    }`,
-                    inline: true,
-                  },
-                  {
-                    name: `All [${roles.length}]`,
-                    value: `${roles.length > 0 ? `${roles.join(", ")}` : "None"}`,
-                    inline: true,
-                  },
-                ],
-              });
+                interaction.member
+              );
         }
         
         interaction.reply({embeds: [embed]})

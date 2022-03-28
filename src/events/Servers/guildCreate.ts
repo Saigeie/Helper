@@ -1,11 +1,13 @@
 import { MessageActionRow, MessageButton, TextChannel } from "discord.js";
 import { client } from "../..";
+import Guilds from "../../data/schemas/Guilds";
 import genKey from "../../modules/genKey";
 import { messageDelete } from "../../modules/messageDelete";
 import { Embed } from "../../structures/Embed";
 import { Event } from "../../structures/Event";
-
-export default new Event(`guildCreate`, (guild) => {
+import buttons from "../../structures/LinkButtons"
+export default new Event(`guildCreate`, async (guild) => {
+  await Guilds.create({ guildId: guild.id})
   const textChats = guild.channels.cache
     .filter(
       (f) =>
@@ -16,20 +18,6 @@ export default new Event(`guildCreate`, (guild) => {
     )
     .first() as TextChannel;
   const key = genKey()
-  const buttons = new MessageActionRow().addComponents([
-    new MessageButton()
-      .setStyle("LINK")
-      .setLabel("Support")
-      .setURL("https://discord.gg/MzAhUmcEbE"),
-    new MessageButton()
-      .setStyle("LINK")
-      .setLabel("Wiki")
-      .setURL("https://github.com/Saigeie/Helper/wiki"),
-    new MessageButton()
-      .setStyle("LINK")
-      .setLabel("Source")
-      .setURL("https://github.com/Saigeie/Helper"),
-  ]);
   if (guild.members.cache.filter((f) => !f.user.bot).size < 30 && !client.config.ignored_requirement_servers.includes(`${guild.id}`)) {
     textChats.send({
       components: [buttons],

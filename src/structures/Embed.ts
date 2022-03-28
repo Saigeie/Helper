@@ -7,12 +7,16 @@ import {
 import { client } from "..";
 
 export class Embed {
-  constructor(data?: MessageEmbedOptions, member?: GuildMember) {
+  constructor(
+    data?: MessageEmbedOptions,
+    member?: GuildMember,
+    footer: string = "Helper 🤍"
+  ) {
     return new MessageEmbed({
       color: client.config.colour,
       ...data,
       footer: {
-        text: `${member ? `${member.user.tag} | `: ""}Helper 🤍`,
+        text: `${member ? `${member.user.tag} | ` : ""}${footer}`,
         iconURL: client.user.displayAvatarURL({
           dynamic: false,
           size: 128,

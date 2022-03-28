@@ -9,7 +9,7 @@ import glob from "glob";
 import { promisify } from "util";
 import { RegisterCommandsOptions } from "../types/Client";
 import { Event } from "./Event";
-import Connect from "../database";
+import Connect from "../data";
 import { Config } from "../types/Config";
 const globPromise = promisify(glob);
 
@@ -17,7 +17,8 @@ export class Helper extends Client {
   commands: Collection<string, CommandTypes> = new Collection();
   config: Config = {
     colour: [248, 200, 220],
-    ignored_requirement_servers: ["955201445748170882"],
+    ignored_requirement_servers: ["955201445748170882", "938840989303464007"],
+    invisable_charater: "\u200B",
   };
   constructor() {
     super({ intents: 32767 });

@@ -5,6 +5,7 @@ import { Embed } from "../../structures/Embed";
 export default new Command({
   name: `userinfo`,
   description: `🤍 | Gain information on a member!`,
+  exampleUsage: `/userinfo`,
   options: [
     {
       type: "USER",
@@ -27,10 +28,10 @@ export default new Command({
           author: {
             name: `${member.user.tag}`,
             icon_url: `${member.user.displayAvatarURL({ dynamic: true })}`,
-            },
-            thumbnail: {
-                url: member.user.displayAvatarURL({ dynamic: true })
-            },
+          },
+          thumbnail: {
+            url: member.user.displayAvatarURL({ dynamic: true }),
+          },
           fields: [
             { name: `ID`, value: `\`${member.user.id}\``, inline: true },
             {
@@ -59,7 +60,7 @@ export default new Command({
               }`,
             },
           ],
-        }),
+        }, interaction.member),
       ],
     });
   },

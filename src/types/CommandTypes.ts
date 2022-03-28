@@ -5,7 +5,7 @@ import {
   GuildMember,
   PermissionResolvable,
 } from "discord.js";
-import { User } from "../database/schemas/Users";
+import { User } from "../data/schemas/Users";
 import { Helper } from "../structures/Client";
 
 export interface Extendedinteraction extends CommandInteraction {
@@ -23,6 +23,9 @@ type RunFun = (options: RunOptions) => any;
 
 export type CommandTypes = {
   owner?: boolean;
+  exampleUsage: string;
+  premium?: boolean;
+  botPermissions?: PermissionResolvable[];
   userPermissions?: PermissionResolvable[];
   run: RunFun;
 } & ChatInputApplicationCommandData;

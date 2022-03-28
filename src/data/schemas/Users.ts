@@ -45,11 +45,6 @@ export interface Moderation {
 const schema = new Schema({
   userId: { type: String },
 
-  // Moderation
-  warns: { type: Array },
-  mutes: { type: Array },
-  bans: { type: Array },
-
   // Economy
   bronze: { type: Number },
   silver: { type: Number },
