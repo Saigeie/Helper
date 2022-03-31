@@ -1,6 +1,7 @@
 import { SelectMenuInteraction } from "discord.js";
 import { Setup, UpdateCategory, UpdateChannel, UpdateDefaultName, UpdateLogsChannel, UpdateMessage, UpdateSupportRole } from "../../modules/Configuration/Tickets";
 import { Command } from "../../structures/Command";
+import { Embed } from "../../structures/Embed";
 
 export default new Command({
   name: `ticket`,
@@ -26,6 +27,14 @@ export default new Command({
   run: async ({ interaction, args, client }) => {
     const config = args.getString("config") || "none";
     switch (config) {
+      case "none":
+        interaction.reply({
+          embeds: [new Embed({
+            title: `Helper's Ticket System`,
+            description: ` > Please select a category to begin the setup!\n > Options can be viewed by doing \`/ticket\` then choose the category!`
+          }, interaction.member)]
+        })
+        break;
       case "setup":
         Setup(client, interaction, args);
         break;

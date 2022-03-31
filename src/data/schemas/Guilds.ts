@@ -20,7 +20,10 @@ const schema = new Schema<Guild>({
   premium: { type: Boolean, default: false },
 
   tickets_channel: { type: String },
-  tickets_message: { type: String },
+  tickets_message: {
+    type: String,
+    default: `✅ Thank you for creating a ticket <<user#mention>>! Please supply all needed information, Please do not ping staff or spam!`,
+  },
   tickets_default_name: { type: String },
   tickets_support_role: { type: String },
   tickets_category: { type: String },

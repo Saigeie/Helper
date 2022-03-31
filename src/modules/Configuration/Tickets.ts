@@ -21,6 +21,7 @@ import { textFormatters } from "../format";
 import Tickets from "../../data/schemas/Tickets";
 import genKey from "../genKey";
 import LinkButtons from "../../structures/LinkButtons";
+import { messageDelete } from "../messageDelete";
 export const Setup = async (
   client: Helper,
   interaction: Extendedinteraction,
@@ -122,7 +123,7 @@ export const UpdateChannel = async (
     )
     .forEach((channel) => {
       options.push({
-        label: `${channel.name.replace("-", "")}`,
+        label: `${channel.name.replace("-", " ")}`,
         value: `${channel.id}`,
       });
     });
@@ -699,7 +700,7 @@ export const CreateTicket = async (
   );
   if (guildSettings.tickets_default_name) {
     const text = await textFormatters(
-      guildSettings.tickets_message,
+      guildSettings.tickets_default_name,
       interaction.member as GuildMember,
       interaction.guild as Guild,
       channel as TextChannel
@@ -748,8 +749,7 @@ export const CreateTicket = async (
       new Embed(
         {
           description: `${
-            formattedText ||
-            `:white_check_mark: Thank you for creating a ticket <@${interaction.user.id}>! Please supply all needed information, Please do not ping staff or spam!`
+            formattedText
           }`,
         },
         interaction.guild.members.cache.find(
@@ -759,6 +759,8 @@ export const CreateTicket = async (
       ),
     ],
   });
+
+  channel.send({ content: `<@&${guildSettings.tickets_support_role}> | <@${interaction.user.id}>`}).then((msg) => messageDelete(msg))
   await Tickets.create({
     channelId: channel.id,
     owner: interaction.user.id,
@@ -766,7 +768,6 @@ export const CreateTicket = async (
     guildId: interaction.guild.id,
     id: await genKey(),
   });
-
   interaction.reply({
     ephemeral: true,
     components: [LinkButtons],

@@ -29,6 +29,8 @@ export default new Event("interactionCreate", async (interaction) => {
     let userData = await Users.findOne({ userId: interaction.member.user.id });
     if (!userData) await Users.create({ userId: interaction.member.user.id });
     userData = await Users.findOne({ userId: interaction.member.user.id });
+    let guildData = await Guilds.findOne({ guildId: interaction.guild.id });
+    if (!guildData) await Guilds.create({ guildId: interaction.guild.id });
     if (command.premium)
       return interaction.reply({
         embeds: [
