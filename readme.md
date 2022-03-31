@@ -33,4 +33,4 @@ Helper is a mutil purpose discord bot that is designed to bring management & ent
  
 # Authors & Contributers
 
- - *[Saige](https://github.com/Saigeie)* - Owner + Developer
+ - [Saige](https://github.com/Saigeie)* - Owner + Developer
