@@ -1,6 +1,7 @@
 import { GuildMember } from "discord.js";
 import { Command } from "../../structures/Command";
 import { Embed } from "../../structures/Embed";
+import LinkButtons from "../../structures/LinkButtons";
 
 export default new Command({
   name: `userinfo`,
@@ -23,44 +24,52 @@ export default new Command({
       roles.push(`<@&${role.id}> `);
     });
     interaction.reply({
+      components: [LinkButtons],
       embeds: [
-        new Embed({
-          author: {
-            name: `${member.user.tag}`,
-            icon_url: `${member.user.displayAvatarURL({ dynamic: true })}`,
+        new Embed(
+          {
+            author: {
+              name: `${member.user.tag}`,
+              icon_url: `${member.user.displayAvatarURL({ dynamic: true })}`,
+            },
+            thumbnail: {
+              url: member.user.displayAvatarURL({ dynamic: true }),
+            },
+            fields: [
+              { name: `ID`, value: `\`${member.user.id}\``, inline: true },
+              {
+                name: `Nickname`,
+                value: `${member.nickname ? `${member.nickname}` : "None"}`,
+                inline: true,
+              },
+              {
+                name: `Account Created`,
+                value: `<t:${Math.floor(
+                  member.user.createdTimestamp / 1000
+                )}:F>`,
+              },
+              {
+                name: `Join Date`,
+                value: `<t:${Math.floor(member.joinedTimestamp / 1000)}:F>`,
+              },
+              {
+                name: `Roles [${
+                  member.roles.cache.filter(
+                    (f) => f.id !== interaction.guild.id
+                  ).size
+                }]`,
+                value: `${
+                  member.roles.cache.filter(
+                    (f) => f.id !== interaction.guild.id
+                  ).size > 0
+                    ? `${roles.join(", ")}`
+                    : "None"
+                }`,
+              },
+            ],
           },
-          thumbnail: {
-            url: member.user.displayAvatarURL({ dynamic: true }),
-          },
-          fields: [
-            { name: `ID`, value: `\`${member.user.id}\``, inline: true },
-            {
-              name: `Nickname`,
-              value: `${member.nickname ? `${member.nickname}` : "None"}`,
-              inline: true,
-            },
-            {
-              name: `Account Created`,
-              value: `<t:${Math.floor(member.user.createdTimestamp / 1000)}:F>`,
-            },
-            {
-              name: `Join Date`,
-              value: `<t:${Math.floor(member.joinedTimestamp / 1000)}:F>`,
-            },
-            {
-              name: `Roles [${
-                member.roles.cache.filter((f) => f.id !== interaction.guild.id)
-                  .size
-              }]`,
-              value: `${
-                member.roles.cache.filter((f) => f.id !== interaction.guild.id)
-                  .size > 0
-                  ? `${roles.join(", ")}`
-                  : "None"
-              }`,
-            },
-          ],
-        }, interaction.member),
+          interaction.member
+        ),
       ],
     });
   },

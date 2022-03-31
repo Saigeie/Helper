@@ -1,12 +1,14 @@
+import chalk from "chalk";
 import { connect } from "mongoose";
+import { client } from "..";
 
 export default function () {
   connect(`${process.env.MONGODB}`)
     .then(() => {
-      console.log(`Connect to database`);
+      client.logger.info(`${chalk.redBright(`Connected to database`)}`);
     })
     .catch((err) => {
-      console.log(`Failed to connect to database`);
+      client.logger.info(`${chalk.redBright(`Failed to connect to database`)}`);
       console.log(err);
     });
 }

@@ -1,12 +1,20 @@
-import textFormatterTerms from "../data/textFormatterTerms"
-import { Guild, GuildMember, StageChannel, TextChannel, VoiceChannel } from "discord.js";
+import textFormatterTerms from "../data/textFormatterTerms";
+import {
+  Guild,
+  GuildMember,
+  StageChannel,
+  TextChannel,
+  VoiceChannel,
+} from "discord.js";
 
 export const formatPerm = (string: string) => {
-    const words = string.split("_")
-    const ar = []
-    words.forEach((word) => {ar.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())})
-    return ar.join(" ")
-}
+  const words = string.split("_");
+  const ar = [];
+  words.forEach((word) => {
+    ar.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+  });
+  return ar.join(" ");
+};
 
 export const textFormatters = (
   msg: string,
@@ -14,8 +22,8 @@ export const textFormatters = (
   guild: Guild,
   channel: TextChannel | VoiceChannel | StageChannel
 ) => {
-    const ar = textFormatterTerms(member, guild, channel)
-    const text = msg
-    for (const value of ar) text.replace(new RegExp(value.original, "igm"), value.new)
-    return text;
+  const ar = textFormatterTerms(member, guild, channel);
+  let text = msg;
+  for (let value of ar) text = text.replace(new RegExp(value.original, "igm"), value.new);
+  return text;
 };

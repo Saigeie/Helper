@@ -2,6 +2,7 @@ import { version } from "discord.js";
 import { Command } from "../../structures/Command";
 import { Embed } from "../../structures/Embed";
 import duration from "humanize-duration";
+import LinkButtons from "../../structures/LinkButtons";
 
 export default new Command({
   name: `stats`,
@@ -9,6 +10,7 @@ export default new Command({
   exampleUsage: `/stats`,
   run: async ({ interaction, client }) => {
     interaction.reply({
+      components: [LinkButtons],
       embeds: [
         new Embed(
           {
@@ -26,9 +28,9 @@ export default new Command({
               },
               {
                 name: `Statistics`,
-                value: `**Users:** ${
+                value: `• **Users:** ${
                   client.users.cache.filter((f) => !f.bot).size
-                }\n**Guilds:** ${client.guilds.cache.size}`,
+                }\n• **Guilds:** ${client.guilds.cache.size}`,
                 inline: true,
               },
               {

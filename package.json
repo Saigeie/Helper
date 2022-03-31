@@ -1,12 +1,17 @@
 {
   "name": "Helper",
   "version": "1.0.0",
-  "description": "✨ Open-Source Multipurpose Discord Bot made by Kanna",
-  "main": "src/index.ts",
+  "description": "✨ The only bot you will ever need!",
+  "main": "dist/shard.js",
+  "exports": [
+    "./dist/shard.js"
+  ],
   "scripts": {
     "dev": "ts-node-dev --rs --cls src/index.ts",
-    "build": "tsc",
-    "prod": "node dist/index.js"
+    "build": "tsc --project tsconfig.json",
+    "prod": "node --enable-source-maps --experimental-specifier-resolution=node dist/shard.js",
+    "build:prod": "npm run build && npm run prod",
+    "repo:update": "git add . && git commit -m \"✨ Update finshed, please check the latest file in updates folder\" && git push -u"
   },
   "keywords": [
     "discord.js",
@@ -16,16 +21,18 @@
     "mongodb",
     "discord bot"
   ],
-  "author": "Kanna",
+  "author": "Saige",
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.13",
     "@types/glob": "^7.2.0",
     "@types/humanize-duration": "^3.27.1",
+    "@types/winston": "^2.4.4",
     "axios": "^0.26.1",
     "body-parser": "^1.19.2",
     "canvas": "^2.9.1",
     "captcha-canvas": "^3.1.0",
+    "chalk": "^4.1.2",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",

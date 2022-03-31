@@ -8,7 +8,7 @@ Helper is a mutil purpose discord bot that is designed to bring management & ent
 
 - [x] Add basic files
 - [x] Information
-- [-] Tickets
+- [x] Tickets
 - [-] Logging
 - [-] Dropdown Roles
 - [-] Leveling
@@ -22,6 +22,15 @@ Helper is a mutil purpose discord bot that is designed to bring management & ent
 - [-] Auto Responses ( Member join, message trigger etc)
 
 
+# Branding
+
+ - Blues: #0c63e7, #0a85ed, #0d41e1
+ - Whites: #f3f3f3, #ffffff, #eeeee
+ - Blacks: #0f1114, #0b0c0e
+ - Red: #FF2145
+ - Header Font: Degular
+
+ 
 # Authors & Contributers
 
  - *[Saige](https://github.com/Saigeie)* - Owner + Developer

@@ -1,11 +1,19 @@
-import { CommandInteractionOptionResolver, GuildMember } from "discord.js";
+import {
+  CommandInteractionOptionResolver,
+  GuildMember,
+  TextChannel,
+} from "discord.js";
+import Guilds from "../../data/schemas/Guilds";
+import Tickets from "../../data/schemas/Tickets";
 import Users from "../../data/schemas/Users";
 import { client } from "../../index";
+import { CreateTicket } from "../../modules/Configuration/Tickets";
 import genKey from "../../modules/genKey";
 import { messageDelete } from "../../modules/messageDelete";
 // import { AddQuarentine } from "../../modules/Moderation/quarentine";
 import { Embed } from "../../structures/Embed";
 import { Event } from "../../structures/Event";
+import LinkButtons from "../../structures/LinkButtons";
 import { Extendedinteraction } from "../../types/CommandTypes";
 
 export default new Event("interactionCreate", async (interaction) => {
@@ -13,17 +21,23 @@ export default new Event("interactionCreate", async (interaction) => {
     const command = client.commands.get(interaction.commandName);
     if (!command)
       return interaction.reply({
-        content: "You have used a non existent command",
+        components: [LinkButtons],
+        content:
+          "It appears this command does not exist? If you believe this is a mistake please contact support",
         ephemeral: true,
       });
     let userData = await Users.findOne({ userId: interaction.member.user.id });
     if (!userData) await Users.create({ userId: interaction.member.user.id });
     userData = await Users.findOne({ userId: interaction.member.user.id });
-    if (command.premium) return interaction.reply({
-      embeds: [new Embed({
-        title: `Premium Only!`,
-        description: `It appears that \`${command.name}\` is a premium only command! As of now march 2022 it is impossible to buy premium unless gifted from the owner of helper!`
-    })] });
+    if (command.premium)
+      return interaction.reply({
+        embeds: [
+          new Embed({
+            title: `Premium Only!`,
+            description: `It appears that \`${command.name}\` is a premium only command! As of now march 2022 it is impossible to buy premium unless gifted from the owner of helper!`,
+          }),
+        ],
+      });
     command.run({
       args: interaction.options as CommandInteractionOptionResolver,
       client,
@@ -32,68 +46,202 @@ export default new Event("interactionCreate", async (interaction) => {
     });
   }
 
+  if (interaction.isSelectMenu()) {
+    if (interaction.customId === "online_staff") {
+      await interaction.deferUpdate();
+    }
+  }
   if (interaction.isButton()) {
-    //! Verification button code
-    // if (interaction.customId === "verify_button") {
-    //   const code = genKey(15);
-    //   interaction.reply({
-    //     ephemeral: true,
-    //     embeds: [
-    //       new Embed({
-    //         title: `Verification`,
-    //         description: `Please copy the code below into the current channel! You have a total of 2 minutes and 5 attempt to complete this task before you are quarantined >:(\n\n• \`${code}\``,
-    //       }),
-    //     ],
-    //   });
-    //   const collector = interaction.channel.createMessageCollector({
-    //     time: 1000 * 60 * 2,
-    //   });
-    //   let tries = 0;
-    //   collector.on("collect", (m) => {
-    //     if (m.author.bot || m.author.id !== interaction.user.id) return;
-    //     console.log(m.content, tries)
-    //     if (tries === 5) {
-    //       m.delete().catch(() => {});
-    //       collector.stop("ran out of tries");
-    //       return;
-    //     }
-    //     if (m.content === code) {
-    //       m.delete().catch(() => {});
-    //       collector.stop("correct");
-    //       return;
-    //     }
-    //     tries++;
-    //     m.channel.send({
-    //       embeds: [
-    //         new Embed(
-    //           { description: `⚠ Incorrect, Please try again!` },
-    //           interaction.member as GuildMember
-    //         ),
-    //       ],
-    //     }).then((msg) => messageDelete(msg, 4000))
-    //     m.delete().catch(() => {});
-    //   });
-    //   collector.on("end", async (c, r) => {
-    //     if (r.toLowerCase() === "ran out of tries") {
-    //       interaction.editReply({
-    //         embeds: [new Embed({
-    //           title: `Failed To Verify`,
-    //           description: `It appears you have ran out of tries! You have been quarentined, you will need to contact a staff member to be verified!`
-    //         })],
-    //       });
-    //       await AddQuarentine(interaction.member as GuildMember, interaction.guild)
-    //     }
-    //     if (r.toLowerCase() === "correct") {
-    //       interaction.editReply({
-    //         embeds: [
-    //           new Embed({
-    //             title: `Verification Successful`,
-    //             description: `You have successfully guess the code! You are now verified 🤍`,
-    //           }),
-    //         ],
-    //       });
-    //     }
-    //   });
-    // }
+    if (interaction.customId === "open_ticket") {
+      await CreateTicket(client, interaction);
+    }
+    if (interaction.customId === "close_ticket") {
+      await interaction.channel.delete().catch(() => {
+        interaction.editReply({
+          embeds: [
+            new Embed({
+              title: `Failed to admit task!`,
+              description: `It appears it would not let me delete this ticket, Please get a staff member to delete it manually!`,
+            }),
+          ],
+        });
+      });
+      await interaction.deferUpdate();
+    }
+    if (interaction.customId === "add_user_ticket") {
+      if (interaction.replied) interaction.deleteReply().catch(() => {});
+      interaction.reply({
+        ephemeral: true,
+        embeds: [
+          new Embed({
+            title: `Mention Member`,
+            description: `Please ping a member below for them to be added to the ticket!`,
+          }),
+        ],
+      });
+      const collector = interaction.channel.createMessageCollector();
+      const member = interaction.guild.members.cache.find(
+        (m) => m.id === interaction.user.id
+      );
+      const guildSettings = await Guilds.findOne({
+        guildId: interaction.guild.id,
+      });
+      let mentionedMember;
+      collector.on("collect", (msg) => {
+        if (
+          msg.author.bot ||
+          msg.author.id !== interaction.user.id
+        ) return;
+        mentionedMember =
+          msg.mentions.members.first() ||
+          interaction.guild.members.cache.find(
+            (m) =>
+              m.id === msg.content.split(" ")[0] ||
+              m.user.username.toLowerCase() === msg.content.toLowerCase() ||
+              m.user.tag.toLowerCase() === msg.content.toLowerCase()
+          ) as GuildMember
+        msg.delete().catch(() => {})
+        return collector.stop("finshed");
+      });
+
+      collector.on("end", async (c, r) => {
+        if (r.toLowerCase() === "finshed") {
+          if (!mentionedMember) {
+            interaction.editReply({
+              embeds: [
+                new Embed({
+                  title: `Failed to fetch member!`,
+                  description: `Please ping a valid member, There was an error finding the member you mentioned!`,
+                }),
+              ],
+            });
+            return;
+          } 
+          const ticket =  await Tickets.findOne({ channelId: interaction.channel.id })
+          const alreadyInTicket = ticket.allowedUsers.includes(`${mentionedMember.id}`)
+  
+          if (alreadyInTicket) {
+               interaction.editReply({
+                 embeds: [
+                   new Embed({
+                     title: `Member Already Exists`,
+                     description: `It appears member ( <@${mentionedMember.user.id}> ) has already been added to this ticket!`,
+                   }),
+                 ],
+               });
+            return;
+          }
+
+
+          (interaction.channel as TextChannel).permissionOverwrites.create(`${mentionedMember.id}`, {
+            VIEW_CHANNEL: true,
+            EMBED_LINKS: true,
+            SEND_MESSAGES: true,
+            ATTACH_FILES: true, 
+            READ_MESSAGE_HISTORY: true
+          })
+
+          await Tickets.findOneAndUpdate({ channelId: interaction.channel.id }, {
+            $push: {
+              allowedUsers: mentionedMember.id
+            }
+          })
+          
+          interaction.editReply({
+            embeds: [
+              new Embed({
+                title: `Member Fetched`,
+                description: `Member ( <@${mentionedMember.user.id}> ) has been collected and added to the ticket!`,
+              }),
+            ],
+          });
+        }
+      });
+    }
+    if (interaction.customId === "remove_user_ticket") {
+        if (interaction.replied) interaction.deleteReply().catch(() => {});
+        interaction.reply({
+          ephemeral: true,
+          embeds: [
+            new Embed({
+              title: `Mention Member`,
+              description: `Please ping a member below for them to be removed from the ticket!`,
+            }),
+          ],
+        });
+        const collector = interaction.channel.createMessageCollector();
+        const member = interaction.guild.members.cache.find(
+          (m) => m.id === interaction.user.id
+        );
+        const guildSettings = await Guilds.findOne({
+          guildId: interaction.guild.id,
+        });
+        let mentionedMember;
+        collector.on("collect", (msg) => {
+          if (msg.author.bot || msg.author.id !== interaction.user.id) return;
+          mentionedMember =
+            msg.mentions.members.first() ||
+            (interaction.guild.members.cache.find(
+              (m) =>
+                m.id === msg.content.split(" ")[0] ||
+                m.user.username.toLowerCase() === msg.content.toLowerCase() ||
+                m.user.tag.toLowerCase() === msg.content.toLowerCase()
+            ) as GuildMember);
+          msg.delete().catch(() => {});
+          return collector.stop("finshed");
+        });
+
+        collector.on("end", async (c, r) => {
+          if (r.toLowerCase() === "finshed") {
+            if (!mentionedMember) {
+              interaction.editReply({
+                embeds: [
+                  new Embed({
+                    title: `Failed to fetch member!`,
+                    description: `Please ping a valid member, There was an error finding the member you mentioned!`,
+                  }),
+                ],
+              });
+              return;
+            }
+            const ticket = await Tickets.findOne({
+              channelId: interaction.channel.id,
+            });
+            const alreadyInTicket = ticket.allowedUsers.includes(
+              `${mentionedMember.id}`
+            );
+            if (!alreadyInTicket) {
+              interaction.editReply({
+                embeds: [
+                  new Embed({
+                    title: `Member Doesnt Exists`,
+                    description: `It appears member ( <@${mentionedMember.user.id}> ) does not already have access to this ticket!`,
+                  }),
+                ],
+              });
+              return;
+            }
+
+            (interaction.channel as TextChannel).permissionOverwrites.create(
+              `${mentionedMember.id}`,
+              {
+                VIEW_CHANNEL: false,
+                SEND_MESSAGES: false,
+              }
+            );
+            let index;
+              ticket.allowedUsers.forEach((user) => { if(user === mentionedMember.id) return index = ticket.allowedUsers.indexOf(user)})
+            ticket.allowedUsers.splice(index, 1); ticket.save()
+            interaction.editReply({
+              embeds: [
+                new Embed({
+                  title: `Member Fetched`,
+                  description: `Member ( <@${mentionedMember.user.id}> ) has been collected and removed to the ticket!`,
+                }),
+              ],
+            });
+          }
+        });
+    }
   }
 });

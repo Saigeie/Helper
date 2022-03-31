@@ -1,6 +1,7 @@
 import { GuildMember } from "discord.js";
 import { Command } from "../../structures/Command";
 import { Embed } from "../../structures/Embed";
+import LinkButtons from "../../structures/LinkButtons";
 
 export default new Command({
   name: `avatar`,
@@ -19,6 +20,7 @@ export default new Command({
       (args.getMember(`member`) as GuildMember) || interaction.member;
 
     interaction.reply({
+      components: [LinkButtons],
       embeds: [
         new Embed(
           {

@@ -1,12 +1,13 @@
 import { Role, TextChannel } from "discord.js";
 import { Schema, Document, model, Types } from "mongoose";
 
-export interface Ticket extends Document {
-    guildId: string;
-    id: string;
-    channelId: string;
-    owner: string;
-    created: string
+export interface Ticket {
+  guildId: string;
+  id: string;
+  channelId: string;
+  owner: string;
+  created: string;
+  allowedUsers: Array<string>;
 }
 
 const schema = new Schema<Ticket>({
@@ -15,6 +16,7 @@ const schema = new Schema<Ticket>({
   channelId: { type: String },
   owner: { type: String },
   created: { type: String },
+  allowedUsers: [{ type: String }],
 });
 
 export default model("Tickets", schema);

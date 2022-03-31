@@ -12,7 +12,7 @@ export default new Command({
           embeds: [
             new Embed({
                 title: `Helper's Panel`,
-                description: `\n• You can find out how to setup helper at the [wiki](https://github.com/Saigeie/Helper/wiki)\n• Commands can be viewed by doing \`/commands\`\n\n*The support server can be found below* 🤍`
+                description: `\n > You can find out how to setup helper at the [wiki](https://github.com/Saigeie/Helper/wiki)\n > Commands can be viewed by doing \`/commands\`\n\n*The support server can be found below*\nWe hope you enjoy using helper.solar!`
             }, interaction.member),
           ],
         });

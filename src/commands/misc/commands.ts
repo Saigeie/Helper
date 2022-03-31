@@ -30,7 +30,7 @@ export default new Command({
           new Embed(
             {
               title: `Helper's Commands`,
-              description: `Make Sure to use \`/commands [command]\` to see information on a certain command!\n\n${commands.join(
+              description: `> Make Sure to use \`/commands [command]\` to see information on a certain command!\n\n${commands.join(
                 " "
               )}`,
             },

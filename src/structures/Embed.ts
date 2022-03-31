@@ -6,17 +6,22 @@ import {
 } from "discord.js";
 import { client } from "..";
 
+interface Options {
+  footer?: string
+}
 export class Embed {
   constructor(
     data?: MessageEmbedOptions,
     member?: GuildMember,
-    footer: string = "Helper 🤍"
+    options: Options = { }
   ) {
     return new MessageEmbed({
       color: client.config.colour,
       ...data,
       footer: {
-        text: `${member ? `${member.user.tag} | ` : ""}${footer}`,
+        text: `${member ? `${member.user.tag} | ` : ""}${
+          options.footer || "Helper 🤍"
+        }`,
         iconURL: client.user.displayAvatarURL({
           dynamic: false,
           size: 128,

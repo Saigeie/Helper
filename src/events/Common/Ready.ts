@@ -1,7 +1,14 @@
 import { Event } from "../../structures/Event";
 import { client } from "../../"
+import chalk from "chalk";
 export default new Event(`ready`, () => {
-    console.log(`${client.user.username} is now online`);
-    console.log(`Guilds: ${client.guilds.cache.size}`);
-    console.log(`Users: ${client.users.cache.size}`);
+    client.logger.info(
+      `${chalk.redBright(chalk.bold(`${client.user.tag}`))} is now online`
+    );
+    client.logger.info(
+      `${chalk.greenBright.bold(`Guilds`)}: ${client.guilds.cache.size}`
+    );
+    client.logger.info(
+      `${chalk.greenBright.bold(`Users`)}: ${client.users.cache.size}`
+    );
 })

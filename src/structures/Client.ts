@@ -11,10 +11,13 @@ import { RegisterCommandsOptions } from "../types/Client";
 import { Event } from "./Event";
 import Connect from "../data";
 import { Config } from "../types/Config";
+import Logger from "../modules/logger";
+import chalk from "chalk";
 const globPromise = promisify(glob);
 
 export class Helper extends Client {
   commands: Collection<string, CommandTypes> = new Collection();
+  logger = Logger;
   config: Config = {
     colour: [248, 200, 220],
     ignored_requirement_servers: ["955201445748170882", "938840989303464007"],
@@ -35,10 +38,12 @@ export class Helper extends Client {
   async registerCommands({ commands, guildId }: RegisterCommandsOptions) {
     if (guildId) {
       this.guilds.cache.get(guildId)?.commands.set(commands);
-      console.log(`Registering commands to ${guildId}`);
+      this.logger.info(`${chalk.redBright(`Commands Registered:`)} ${guildId}`);
     } else {
       this.application?.commands.set(commands);
-      console.log("Registering global commands");
+      this.logger.info(
+        `${chalk.redBright(`Registering global commands`)}`
+      );
     }
   }
 
@@ -61,7 +66,6 @@ export class Helper extends Client {
         commands: slashCommands,
       });
     });
-
     const eventFiles = await globPromise(
       `${__dirname}/../events/**/*{.ts,.js}`
     );

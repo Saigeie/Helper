@@ -14,11 +14,10 @@
       "allowSyntheticDefaultImports": true,
       "skipLibCheck": true,
       "skipDefaultLibCheck": true,
-      "declaration": true,
       "resolveJsonModule": true,
    },
    "include": [
-      "src", "*.d.ts"
+      "src"
    ],
    "exclude": [
       "node_modules"

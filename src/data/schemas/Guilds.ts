@@ -1,7 +1,7 @@
 import { Role, TextChannel } from "discord.js";
 import { Schema, Document, model, Types } from "mongoose";
 
-export interface Guild extends Document {
+export interface Guild {
   guildId: string;
   owner_key: string;
   premium: boolean;
