@@ -2,6 +2,9 @@
 
 Helper is a mutil purpose discord bot that is designed to bring management & entertainment to your server. ( This bot is inspired by [WickBot](https://wickbot.com/) & [Tatsu](https://tastu.gg))
 
+# Repo includes:
+
+this repository includes, the inital bot itself including its dashboard / web server. The reason these are combind is so that we can gain info from the bot that is not accessable else ware. ( API request, database request etc )
 #  Progression
 
 *This is in no particular order*

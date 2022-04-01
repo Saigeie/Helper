@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="nav__burger" id="burger">
+      <div class="burger__line" id="burger_first"></div>
+      <div class="burger__line" id="burger_last"></div>
+    </div>
+    <div class="nav" id="nav">
+     <div class="nav__inside">
+          <div class="nav__header">
+        <h1 class="nav__title">Helper.solar</h1>
+        <p class="nav__about">A place where the unimageable because a reality!</p>
+      </div>
+      <div class="nav__list">
+            <ul>
+                <li class="nav__item">
+                    <a href="/">Home</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/wiki">Wiki</a>
+                </li>
+            </ul>
+      </div>
+      <div class="nav__buttons">
+          <a href="/github" class="nav__button"><i class='bx bxl-github'></i></a>
+          <a href="/discord" class="nav__button"><i class='bx bxl-discord-alt' ></i></a>
+      </div>
+     </div>
+    </div>
+  </body>
+  <script>
+    const burger = document.getElementById("burger");
+    const burgerLineFirst = document.getElementById("burger_first");
+    const burgerLineLast = document.getElementById("burger_last");
+    const navMenu = document.getElementById("nav");
+    burger.addEventListener("click", (e) => {
+      e.preventDefault();
+      navMenu.classList.toggle("nav__active");
+      burgerLineFirst.classList.toggle(`burger__line__top`)
+      burgerLineLast.classList.toggle(`burger__line__bottom`)
+    });
+  </script>
+</html>

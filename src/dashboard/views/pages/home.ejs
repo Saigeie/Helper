@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/_abstract/root.css" />
+    <link rel="stylesheet" href="/styles/_components/navbar.css" />
+    <link rel="stylesheet" href="/styles/_components/footer.css" />
+    <link rel="stylesheet" href="/styles/_components/badges.css" />
+    <link rel="stylesheet" href="/styles/_components/buttons.css" />
+    <link rel="stylesheet" href="/styles/_pages/home.css" />
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <meta content="Helper - Home" property="og:title" />
+    <meta
+      content="A multipurpose discord bot, that can help you manage & entertain your server."
+      property="og:description"
+    />
+    <meta content="https://helper.solar/discord" property="og:url" />
+    <meta
+      content="https://cdn.discordapp.com/attachments/608608598955917313/959205790856642630/helper_Logo.png"
+      property="og:image"
+    />
+    <meta content="#FF2145" data-react-helmet="true" name="theme-color" />
+    <title>Helper - The Only Bot You Will Need!</title>
+  </head>
+  <body>
+    <div class="modules">
+        <div class="nav">
+            <%- include('../components/navbar'); -%>
+        </div>
+        <div class="main">
+            <div class="header">
+                <h2 class="badge beta">beta</h2>
+                <h1 class="title">Improving your <span class="underline">discord</span> experiance!</h1>
+                <p class="about">Helping and solving your discord needs all in one place! Manage & entertain your server all from one easy to use bot!</p>
+                <div class="buttons">
+                    <a href="/invite" class="btn primary">Invite</a>
+                    <a href="/comingsoon" class="btn primary">Dashboard</a>
+                </div>
+            </div>
+            <div class="features">
+              <div class="features__header">
+                <h1 class="features__title">Features</h1>
+              </div>
+              <div class="divider"></div>
+              <div class="features__list">
+                  <div class="feature">
+                    <h1 class="feature__title">Tickets</h1>
+                    <p class="feature__about">Easy & full of features is the best way to describe helper's ticket system! Easy to setup & simple and effect to use.</p>
+                  </div>
+                  <div class="feature">
+                    <h1 class="feature__title">Economy</h1>
+                    <p class="feature__about">Help entertain your discord server by using helper's global economy! Easily earn your own money, work jobs, purchase items, find crates and more!</p>
+                  </div>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stats__header">
+                <h1 class="stats__title">Statistics</h1>
+              </div>
+              <div class="divider"></div>
+              <div class="stats__list">
+                <div class="stat">
+                  <h1 class="stat__title"><%= bot.guilds.cache.size %></h1>
+                  <p class="stat__about">Total Servers</p>
+                </div>
+                <div class="stat">
+                  <h1 class="stat__title"><%= bot.users.cache.size %></h1>
+                  <p class="stat__about">Total Users</p>
+                </div>
+                <div class="stat">
+                  <h1 class="stat__title"><%= premium %></h1>
+                  <p class="stat__about">Premium Servers</p>
+                </div>
+                <div class="stat">
+                  <h1 class="stat__title"><%= commandsRan %></h1>
+                  <p class="stat__about">Commands Ran</p>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     <%- include("../components/footer") -%>
+  </body>
+</html>
