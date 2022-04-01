@@ -13,7 +13,6 @@ const webhookClient = new WebhookClient({ id: process.env.WEBHOOK_ID, url: proce
 import chalk from "chalk";
 
 const myFormat = printf(({ level, message, label, timestamp }) => {
-  webhookClient.send(`${timestamp} [${label}]\n\`\`\`\n${message}\n\`\`\``);
   return `${chalk.bold(`${timestamp}`)} ${chalk.redBright(`┃`)} ${message}`;
 });
 
