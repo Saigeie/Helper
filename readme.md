@@ -13,7 +13,6 @@ this repository includes, the inital bot itself including its dashboard / web se
 - [x] Information
 - [x] Tickets
 - [-] Logging
-- [-] Dropdown Roles
 - [-] Leveling
 - [-] Auto Mod
 - [-] Join wall
