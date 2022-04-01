@@ -22,6 +22,7 @@ import Tickets from "../../data/schemas/Tickets";
 import genKey from "../genKey";
 import LinkButtons from "../../structures/LinkButtons";
 import { messageDelete } from "../messageDelete";
+
 export const Setup = async (
   client: Helper,
   interaction: Extendedinteraction,
