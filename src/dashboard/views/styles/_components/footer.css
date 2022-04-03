@@ -70,3 +70,19 @@ a {
     letter-spacing: .25rem;
     opacity: 1;
 }
+
+@media screen and (max-width: 900px) {
+    .footer__main {
+        display: flex;
+        flex-direction: column;
+    }
+    .footer__about__text {
+        display: none;
+    }
+    .footer__copyright {
+        margin-bottom: .75rem;
+    }
+    .footer__links {
+        margin-top: 1rem;
+    }
+}

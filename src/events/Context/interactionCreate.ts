@@ -16,6 +16,13 @@ import { Event } from "../../structures/Event";
 import LinkButtons from "../../structures/LinkButtons";
 import { Extendedinteraction } from "../../types/CommandTypes";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export default new Event("interactionCreate", async (interaction) => {
   if (interaction.isCommand()) {
     const command = client.commands.get(interaction.commandName);
@@ -40,6 +47,17 @@ export default new Event("interactionCreate", async (interaction) => {
           }),
         ],
       });
+    if (command.owner) {
+      if (!client.config.owner_ids.includes(`${interaction.user.id}`))
+        return interaction.reply({
+          embeds: [
+            new Embed({
+              title: `Owner Only!`,
+              description: `It appears that \`${command.name}\` is a owner only command!`,
+            }),
+          ],
+        });
+    }
     command.run({
       args: interaction.options as CommandInteractionOptionResolver,
       client,

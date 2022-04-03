@@ -7,6 +7,13 @@ import {
   VoiceChannel,
 } from "discord.js";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export const formatPerm = (string: string) => {
   const words = string.split("_");
   const ar = [];

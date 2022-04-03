@@ -1,5 +1,12 @@
 import { WebhookClient } from "discord.js";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 /*
     Original Idea https://github.com/peterhanania/Pogy/blob/main/utils/logger.js
     Converted to typescript

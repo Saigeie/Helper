@@ -1,6 +1,13 @@
 import { Guild, GuildMember, StageChannel, TextBasedChannel, TextChannel, VoiceChannel } from "discord.js";
 import { formatPerm } from "../modules/format";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export default function (member: GuildMember, guild: Guild, channel: TextChannel | VoiceChannel | StageChannel) {
     return [
       { original: `<<user#id>>`, new: `${member.user.id}` },

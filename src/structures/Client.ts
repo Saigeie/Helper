@@ -15,13 +15,33 @@ import Logger from "../modules/logger";
 import chalk from "chalk";
 const globPromise = promisify(glob);
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export class Helper extends Client {
   commands: Collection<string, CommandTypes> = new Collection();
   logger = Logger;
   config: Config = {
-    colour: [248, 200, 220],
-    ignored_requirement_servers: ["955201445748170882", "938840989303464007"],
+    colour: "#FF2145",
+    ignored_requirement_servers: [
+      "955201445748170882",
+      "938840989303464007",
+      "959605624784711760",
+    ],
     invisable_charater: "\u200B",
+    emojis: {
+      reply: "<:reply:959830863661649951>",
+      right_skip: "<:right_skip:959833675569168424>",
+      left_skip: " <:left_skip:959833675560808498>",
+      right_arrow: "<:right_arrow:959833675523063870>",
+      left_arrow: "<:left_arrow:959833675296555029>",
+      coin: "₿",
+    },
+    owner_ids: [`462936117596127232`],
   };
   constructor() {
     super({ intents: 32767 });
@@ -41,9 +61,7 @@ export class Helper extends Client {
       this.logger.info(`${chalk.redBright(`Commands Registered:`)} ${guildId}`);
     } else {
       this.application?.commands.set(commands);
-      this.logger.info(
-        `${chalk.redBright(`Registering global commands`)}`
-      );
+      this.logger.info(`${chalk.redBright(`Registering global commands`)}`);
     }
   }
 

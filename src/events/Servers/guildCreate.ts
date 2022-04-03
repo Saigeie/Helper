@@ -6,6 +6,14 @@ import { messageDelete } from "../../modules/messageDelete";
 import { Embed } from "../../structures/Embed";
 import { Event } from "../../structures/Event";
 import buttons from "../../structures/LinkButtons"
+
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export default new Event(`guildCreate`, async (guild) => {
   await Guilds.create({ guildId: guild.id})
   const textChats = guild.channels.cache

@@ -3,6 +3,13 @@
 import { ShardingManager } from "discord.js";
 import { client } from ".";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 const manager = new ShardingManager(`./dist/index.js`, {
   token: process.env.DISCORD_TOKEN,
   //autoSpawn: true,

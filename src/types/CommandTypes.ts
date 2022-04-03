@@ -8,6 +8,13 @@ import {
 import { User } from "../data/schemas/Users";
 import { Helper } from "../structures/Client";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export interface Extendedinteraction extends CommandInteraction {
   member: GuildMember;
 }
@@ -27,5 +34,6 @@ export type CommandTypes = {
   premium?: boolean;
   botPermissions?: PermissionResolvable[];
   userPermissions?: PermissionResolvable[];
+  category: string;
   run: RunFun;
 } & ChatInputApplicationCommandData;

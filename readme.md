@@ -1,6 +1,6 @@
 # Helper
 
-Helper is a mutil purpose discord bot that is designed to bring management & entertainment to your server. ( This bot is inspired by [WickBot](https://wickbot.com/) & [Tatsu](https://tastu.gg))
+Helper is a mutil purpose discord bot that is designed to bring management & entertainment to your server.
 
 # Repo includes:
 
@@ -12,7 +12,7 @@ this repository includes, the inital bot itself including its dashboard / web se
 - [x] Add basic files
 - [x] Information
 - [x] Tickets
-- [-] Logging
+- [x] Logging
 - [-] Leveling
 - [-] Auto Mod
 - [-] Join wall
@@ -20,10 +20,16 @@ this repository includes, the inital bot itself including its dashboard / web se
 - [-] Lockdown
 - [-] Moderation System
 - [-] Economy System
-- [-] Premium Option
+- [x] Premium Option
 - [-] Auto Responses ( Member join, message trigger etc)
 
 
+# Credits
+
+ - [Dank Memer](https://dankmemer.lol/)
+ - [Wick](https://wickbot.com/)
+ - [Tatsu](https://tastu.gg)
+ 
 # Branding
 
  - Blues: #0c63e7, #0a85ed, #0d41e1
@@ -32,6 +38,9 @@ this repository includes, the inital bot itself including its dashboard / web se
  - Red: #FF2145
  - Header Font: Degular
 
+# File usage
+
+ All of my files are free to use, but please include the crediting at the top of the files!
  
 # Authors & Contributers
 

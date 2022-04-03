@@ -3,10 +3,18 @@ import { Command } from "../../structures/Command";
 import { Embed } from "../../structures/Embed";
 import LinkButtons from "../../structures/LinkButtons";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+ */
+
 export default new Command({
   name: `userinfo`,
   description: `🤍 | Gain information on a member!`,
   exampleUsage: `/userinfo`,
+  category: "information",
   options: [
     {
       type: "USER",

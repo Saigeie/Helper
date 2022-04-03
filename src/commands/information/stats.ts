@@ -4,10 +4,18 @@ import { Embed } from "../../structures/Embed";
 import duration from "humanize-duration";
 import LinkButtons from "../../structures/LinkButtons";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+ */
+
 export default new Command({
   name: `stats`,
   description: `🤍 | See Helper's statistics!`,
   exampleUsage: `/stats`,
+  category: "information",
   run: async ({ interaction, client }) => {
     interaction.reply({
       components: [LinkButtons],

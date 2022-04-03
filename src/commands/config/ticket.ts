@@ -3,10 +3,19 @@ import { Setup, UpdateCategory, UpdateChannel, UpdateDefaultName, UpdateLogsChan
 import { Command } from "../../structures/Command";
 import { Embed } from "../../structures/Embed";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+ */
+
 export default new Command({
   name: `ticket`,
   description: `🔨 | Setup/Manage the ticket config!`,
   exampleUsage: `/ticket [config]`,
+  category: "config",
+  userPermissions: ["ADMINISTRATOR"],
   options: [
     {
       type: "STRING",
@@ -29,11 +38,16 @@ export default new Command({
     switch (config) {
       case "none":
         interaction.reply({
-          embeds: [new Embed({
-            title: `Helper's Ticket System`,
-            description: ` > Please select a category to begin the setup!\n > Options can be viewed by doing \`/ticket\` then choose the category!`
-          }, interaction.member)]
-        })
+          embeds: [
+            new Embed(
+              {
+                title: `Helper's Ticket System`,
+                description: ` > Please select a category to begin the setup!\n > Options can be viewed by doing \`/ticket\` then choose the category!`,
+              },
+              interaction.member
+            ),
+          ],
+        });
         break;
       case "setup":
         Setup(client, interaction, args);

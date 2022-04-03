@@ -1,12 +1,20 @@
 import { GuildMember, TextChannel } from "discord.js";
 import { Schema, Document, model, Types } from "mongoose";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export interface Crate {
   type: "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary" | "Unobtainable";
   name: string;
   description: string;
   obtained: number;
   gifted?: boolean;
+  id: string;
 }
 
 export interface Item {
@@ -25,32 +33,25 @@ export interface Item {
   durabilty?: number;
 }
 
-export interface User extends Document {
+export interface User {
   userId: string;
-  bronze: number;
-  silver: number;
-  gold: number;
+  wallet: number;
+  bank: number;
+  bank_cap: number;
   crates: Array<Crate>;
   items: Array<Item>;
 }
 
-export interface Moderation {
-  moderator: string;
-  date: number;
-  reason: string;
-  channel: string;
-  id: string
-}
 
-const schema = new Schema({
+const schema = new Schema<User>({
   userId: { type: String },
 
   // Economy
-  bronze: { type: Number },
-  silver: { type: Number },
-  gold: { type: Number },
-  crates: { type: Array },
-  items: { type: Array },
+  wallet: { type: Number, default: 50 },
+  bank: { type: Number, default: 0 },
+  bank_cap: { type: Number, default: 5000 },
+  crates: [{ type: Object }],
+  items: [{ type: Object }],
 });
 
 export default model("Users", schema);

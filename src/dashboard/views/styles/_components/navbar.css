@@ -7,7 +7,7 @@
   top: 15%;
   z-index: 998;
   border-radius: 25px;
-  transition: .75s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: 0.75s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .nav__active {
   position: fixed;
@@ -25,7 +25,7 @@ li {
   list-style-type: none;
 }
 .nav__burger {
-padding: 15px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -38,8 +38,8 @@ padding: 15px;
 .burger__line {
   width: 28px;
   height: 2px;
-  background-color: var(--off-white);
-    transition: .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  background-color: var(--red);
+  transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .burger__line:last-child {
   margin-top: 3px;
@@ -88,23 +88,55 @@ padding: 15px;
 }
 
 .nav__buttons {
-    margin-top: 1rem;
-    display: flex;
+  margin-top: 1rem;
+  display: flex;
 }
-.nav__buttons a { 
-    display: flex;
-    justify-content: center;
-    background-color: var(--gray);
-    height: 45px;
-    width: 45px;
-    font-size: 27px;
-    border-radius: 100%;
-    margin-right: 15px;
-    transition: .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+.nav__buttons a {
+  display: flex;
+  justify-content: center;
+  background-color: var(--gray);
+  height: 45px;
+  width: 45px;
+  font-size: 27px;
+  border-radius: 100%;
+  margin-right: 15px;
+  transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .nav__buttons i {
-    margin-top: 9px;
+  margin-top: 9px;
 }
 .nav__buttons a:hover {
-    background-color: var(--gray2);
+  background-color: var(--gray2);
+}
+@media screen and (max-width: 1252px) {
+  .nav__burger {
+    position: fixed;
+    right: 90%;
+    top: 5%;
+  }
+  .nav {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    border-radius: 0;
+  }
+  .nav__active {
+    right: 0;
+    top: 0;
+  }
+  .nav__header {
+    margin-top: 7rem;
+  }
+  .nav__inside {
+    margin-left: 4.75rem
+  }
+}
+
+
+@media screen  and (max-width: 900px) {
+  .nav__burger {
+     position: fixed;
+    right: 80%;
+    top: 5%;
+  }
 }

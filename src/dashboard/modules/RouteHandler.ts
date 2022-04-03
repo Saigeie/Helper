@@ -9,6 +9,13 @@ export async function importFile(filePath: string) {
   return (await import(filePath))?.default;
 }
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 // Route Handler
 export  async function RouteHandler(app) {
   const Files = await globPromise(`${process.cwd()}/src/dashboard/Routes/**/*.ts`);

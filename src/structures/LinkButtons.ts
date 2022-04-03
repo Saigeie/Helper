@@ -1,10 +1,17 @@
 import { MessageActionRow, MessageButton } from "discord.js";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export default new MessageActionRow().addComponents([
   new MessageButton()
     .setStyle("LINK")
     .setLabel("Support")
-    .setURL("https://discord.gg/MzAhUmcEbE"),
+    .setURL("https://helper.solar/discord"),
   new MessageButton()
     .setStyle("LINK")
     .setLabel("Wiki")

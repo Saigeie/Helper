@@ -1,7 +1,7 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      DISCORD_343OKEN: string;
+      DISCORD_TOKEN: string;
       MONGODB: string;
       GUILD_ID: string;
       INVITE: string;

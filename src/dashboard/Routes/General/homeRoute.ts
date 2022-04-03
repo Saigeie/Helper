@@ -1,6 +1,13 @@
 import { Route } from "../../structures/Route"
 import ClientData from "../../../data/schemas/ClientData";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 export default new Route({
   name: "/",
   run: async (req, res, { client }) => {

@@ -6,6 +6,13 @@ import {
 } from "discord.js";
 import { client } from "..";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+*/
+
 interface Options {
   footer?: string
 }

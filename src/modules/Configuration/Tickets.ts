@@ -23,6 +23,13 @@ import genKey from "../genKey";
 import LinkButtons from "../../structures/LinkButtons";
 import { messageDelete } from "../messageDelete";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+ */
+
 export const Setup = async (
   client: Helper,
   interaction: Extendedinteraction,
@@ -71,11 +78,10 @@ export const Setup = async (
     .catch(() => {});
 
   const collector = interaction.channel.createMessageComponentCollector();
-  collector.on("collect", (i) => {
+  collector.on("collect", async (i) => {
     if (i.isButton()) {
       if (i.customId === "finsh_button") {
-        AfterTicketSetup(client, interaction, args);
-        interaction.deleteReply().catch(() => {});
+        AfterTicketSetup(client, i, args);
       }
     }
     if (i.isSelectMenu()) {
@@ -165,29 +171,31 @@ export const UpdateChannel = async (
     selectedValue = i.values[0];
     return collector.stop("finshed");
   });
-  collector.on("end", async (c, r) => {
-    if (r.toLowerCase() === "finshed") {
-      await Guilds.findOneAndUpdate(
-        { guildId: interaction.guild.id },
-        {
-          tickets_channel: selectedValue,
-        }
-      );
-      const channel = interaction.guild.channels.cache.find(
-        (c) => c.id === selectedValue
-      ) as TextChannel;
-      interaction.editReply({
-        components: [],
-        embeds: [
-          new Embed({
-            title: `Channel Collected`,
-            description: `Your channel choice ( **${channel.name}** ) has successfully been saved to your configuration
+    
+    collector.on("end", async (c, r) => {
+      if (r === "error") return;
+      if (r.toLowerCase() === "finshed") {
+        await Guilds.findOneAndUpdate(
+          { guildId: interaction.guild.id },
+          {
+            tickets_channel: selectedValue,
+          }
+        );
+        const channel = interaction.guild.channels.cache.find(
+          (c) => c.id === selectedValue
+        ) as TextChannel;
+        interaction.editReply({
+          components: [],
+          embeds: [
+            new Embed({
+              title: `Channel Collected`,
+              description: `Your channel choice ( **${channel.name}** ) has successfully been saved to your configuration
           `,
-          }),
-        ],
-      });
-    }
-  });
+            }),
+          ],
+        });
+      }
+    });
 };
 
 export const UpdateMessage = async (
@@ -230,31 +238,33 @@ export const UpdateMessage = async (
     msg.delete().catch(() => {});
     return collector.stop("finshed");
   });
-  collector.on("end", async (c, r) => {
-    if (r.toLowerCase() === "finshed") {
-      await Guilds.findOneAndUpdate(
-        { guildId: interaction.guild.id },
-        {
-          tickets_message: selectedValue.slice(0, 1000),
-        }
-      );
-      interaction.editReply({
-        components: [],
-        embeds: [
-          new Embed({
-            title: `Message Collected`,
-            description: `Your ticket prompt message has successfully been saved to your configuration`,
-            fields: [
-              {
-                name: `Message`,
-                value: `\`\`\`\n${selectedValue.slice(0, 1000)}\n\`\`\``,
-              },
-            ],
-          }),
-        ],
-      });
-    }
-  });
+    
+    collector.on("end", async (c, r) => {
+      if (r === "error") return;
+      if (r.toLowerCase() === "finshed") {
+        await Guilds.findOneAndUpdate(
+          { guildId: interaction.guild.id },
+          {
+            tickets_message: selectedValue.slice(0, 1000),
+          }
+        );
+        interaction.editReply({
+          components: [],
+          embeds: [
+            new Embed({
+              title: `Message Collected`,
+              description: `Your ticket prompt message has successfully been saved to your configuration`,
+              fields: [
+                {
+                  name: `Message`,
+                  value: `\`\`\`\n${selectedValue.slice(0, 1000)}\n\`\`\``,
+                },
+              ],
+            }),
+          ],
+        });
+      }
+    });
 };
 
 export const UpdateDefaultName = async (
@@ -301,7 +311,6 @@ export const UpdateDefaultName = async (
     .catch(() => {});
 
   const collector = interaction.channel.createMessageCollector();
-
   let selectedValue;
   collector.on("collect", (msg) => {
     if (msg.author.bot || msg.author.id !== interaction.user.id) return;
@@ -309,39 +318,40 @@ export const UpdateDefaultName = async (
     msg.delete().catch(() => {});
     return collector.stop("finshed");
   });
-  collector.on("end", async (c, r) => {
-    if (r.toLowerCase() === "finshed") {
-      const msg = selectedValue.slice(0, 50).replace(" ", "-");
-      for (let block of ignoredTextFormats) {
-        msg.split("-").forEach((word) => {
-          if (word === block) {
-            msg.replace(block, "");
+    collector.on("end", async (c, r) => {
+      if (r === "error") return;
+      if (r.toLowerCase() === "finshed") {
+        const msg = selectedValue.slice(0, 50).replace(" ", "-");
+        for (let block of ignoredTextFormats) {
+          msg.split("-").forEach((word) => {
+            if (word === block) {
+              msg.replace(block, "");
+            }
+          });
+        }
+        await Guilds.findOneAndUpdate(
+          { guildId: interaction.guild.id },
+          {
+            tickets_default_name: msg,
           }
+        );
+        interaction.editReply({
+          components: [],
+          embeds: [
+            new Embed({
+              title: `Name Collected`,
+              description: `Your default channel name has successfully been saved to your configuration`,
+              fields: [
+                {
+                  name: `Name`,
+                  value: `\`\`\`\n${msg}\n\`\`\``,
+                },
+              ],
+            }),
+          ],
         });
       }
-      await Guilds.findOneAndUpdate(
-        { guildId: interaction.guild.id },
-        {
-          tickets_default_name: msg,
-        }
-      );
-      interaction.editReply({
-        components: [],
-        embeds: [
-          new Embed({
-            title: `Name Collected`,
-            description: `Your default channel name has successfully been saved to your configuration`,
-            fields: [
-              {
-                name: `Name`,
-                value: `\`\`\`\n${msg}\n\`\`\``,
-              },
-            ],
-          }),
-        ],
-      });
-    }
-  });
+    });
 };
 
 export const UpdateSupportRole = async (
@@ -349,7 +359,7 @@ export const UpdateSupportRole = async (
   interaction: SelectMenuInteraction,
   args: CommandInteractionOptionResolver
 ) => {
-  const options = [];
+  const options = [{ label: `Create one for me`, value: `create_one`}];
   interaction.guild.roles.cache
     .filter(
       (f) =>
@@ -395,12 +405,23 @@ export const UpdateSupportRole = async (
   });
 
   let selectedValue;
-  collector.on("collect", (i) => {
+  collector.on("collect", async (i) => {
     if (i.user.bot || i.user.id !== interaction.user.id) return;
-    selectedValue = i.values[0];
+    const value = i.values[0]
+    if (value === "create_one") {
+      const role = await i.guild.roles.create({
+        name: `Ticket Support`,
+        color: client.config.colour,
+        hoist: true,
+        mentionable: false,
+      })
+      selectedValue = role.id
+    } else { selectedValue = value }
     return collector.stop("finshed");
   });
+  if(!selectedValue) collector.stop("error")
   collector.on("end", async (c, r) => {
+    if (r === "error") return;
     if (r.toLowerCase() === "finshed") {
       await Guilds.findOneAndUpdate(
         { guildId: interaction.guild.id },
@@ -591,41 +612,42 @@ export const UpdateLogsChannel = async (
     selectedValue = i.values[0];
     return collector.stop("finshed");
   });
-  collector.on("end", async (c, r) => {
-    if (r.toLowerCase() === "finshed") {
-      await Guilds.findOneAndUpdate(
-        { guildId: interaction.guild.id },
-        {
-          tickets_channel: selectedValue,
-        }
-      );
-      const channel = interaction.guild.channels.cache.find(
-        (c) => c.id === selectedValue
-      ) as TextChannel;
-      interaction.editReply({
-        components: [],
-        embeds: [
-          new Embed({
-            title: `Logs Channel Collected`,
-            description: `Your logs channel choice ( **${channel.name}** ) has successfully been saved to your configuration
+    
+    collector.on("end", async (c, r) => {
+      if (r === "error") return;
+      if (r.toLowerCase() === "finshed") {
+        await Guilds.findOneAndUpdate(
+          { guildId: interaction.guild.id },
+          {
+            tickets_logs_channel: selectedValue,
+          }
+        );
+        const channel = interaction.guild.channels.cache.find(
+          (c) => c.id === selectedValue
+        ) as TextChannel;
+        interaction.editReply({
+          components: [],
+          embeds: [
+            new Embed({
+              title: `Logs Channel Collected`,
+              description: `Your logs channel choice ( **${channel.name}** ) has successfully been saved to your configuration
           `,
-          }),
-        ],
-      });
-    }
-  });
+            }),
+          ],
+        });
+      }
+    });
 };
 
 export const AfterTicketSetup = async (
   client: Helper,
-  interaction: Extendedinteraction,
+  interaction: ButtonInteraction,
   args: CommandInteractionOptionResolver
 ) => {
   const guildData = await Guilds.findOne({ guildId: interaction.guild.id });
   const channel = (interaction.guild.channels.cache.find(
     (c) => c.id === guildData.tickets_channel
   ) || interaction.channel) as TextChannel;
-
   channel.send({
     components: [
       new MessageActionRow().addComponents([
@@ -643,6 +665,15 @@ export const AfterTicketSetup = async (
       }),
     ],
   });
+  if(interaction.replied) interaction.deleteReply().catch(() => {})
+  interaction.reply({
+    ephemeral: true,
+    components: [LinkButtons],
+    embeds: [new Embed({
+      title: `Ticket Prompt Completed`,
+      description: `Your ticket prompt has successfully been saved, Please visit <#${channel.id}> to see it in action!`
+    })]
+  })
 };
 
 export const CreateTicket = async (
@@ -670,6 +701,7 @@ export const CreateTicket = async (
   const channel = await interaction.guild.channels.create(
     `ticket-${interaction.user.id}`,
     {
+      parent: `${guildSettings.tickets_category}`,
       type: `GUILD_TEXT`,
       permissionOverwrites: [
         { id: `${interaction.guild.id}`, deny: ["VIEW_CHANNEL"], type: "role" },
@@ -761,7 +793,7 @@ export const CreateTicket = async (
     ],
   });
 
-  channel.send({ content: `<@&${guildSettings.tickets_support_role}> | <@${interaction.user.id}>`}).then((msg) => messageDelete(msg))
+  channel.send({ content: `<@&${guildSettings.tickets_support_role}> | <@${interaction.user.id}>`}).then((msg) => messageDelete(msg, 200))
   await Tickets.create({
     channelId: channel.id,
     owner: interaction.user.id,

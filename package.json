@@ -9,9 +9,9 @@
   "scripts": {
     "dev": "ts-node-dev --rs --cls src/index.ts",
     "build": "tsc --project tsconfig.json",
-    "prod": "node --enable-source-maps --experimental-specifier-resolution=node dist/shard.js",
+    "prod": "chmod 777 src/scripts/start.sh && chmod 777 node_modules/.bin/ts-node-dev && pm2 run src/scripts/start.sh --name=Helper",
     "build:prod": "npm run build && npm run prod",
-    "repo:update": "git add . && git commit -m \"✨ Update finshed, please check the latest file in updates folder\" && git push helper && echo \"ShortCut: https://github.com/Saigeie/Helper\""
+    "repo:update:linux": "chmod 777 src/scripts/repo.update.sh && /src/scripts/repo.update.sh"
   },
   "keywords": [
     "discord.js",

@@ -1,5 +1,6 @@
 body {
   background-color: var(--black);
+  overflow-x: hidden;
 }
 .modules {
   display: flex;
@@ -131,4 +132,40 @@ color: var(--off-white);
   opacity: .5;
   font-size: 25px;
   max-width: 1000px;
+}
+
+
+@media screen and (max-width: 1252px) {
+  .header, .features, .stats {
+    margin-left: 10vw;
+  }
+
+}
+@media screen and (max-width: 1150px) {
+  .header, .features, .stats {
+    margin-left: 5vw;
+  }
+}
+@media screen and (max-width: 900px) {
+  .header .title {
+    font-size: 35px;
+    max-width: 500px;
+  }
+  .header .about {
+    font-size: 15px;
+    max-width: 350px;
+  }
+
+  .feature__title {
+    font-size: 20px;
+  }
+  .feature__about {
+    font-size: 25px;
+    max-width: 70vw;
+  }
+
+  .stats__list {
+    display: flex;
+    flex-direction: column;
+  }
 }

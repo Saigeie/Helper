@@ -3,10 +3,18 @@ import { Command } from "../../structures/Command";
 import { Embed } from "../../structures/Embed";
 import LinkButtons from "../../structures/LinkButtons";
 
+/**
+ * Developer - Saige#8157
+ * Website: https://helper.solar
+ * Github: https://github.com/Saigeie
+ * 2022
+ */
+
 export default new Command({
   name: `avatar`,
   description: `🤍 | Get a user's avatar!`,
   exampleUsage: `/avatar [member]`,
+  category: "information",
   options: [
     {
       type: "USER",
