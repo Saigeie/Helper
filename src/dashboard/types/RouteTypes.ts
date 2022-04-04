@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Helper } from "../../structures/Client";
 
 /**
@@ -10,11 +10,14 @@ import { Helper } from "../../structures/Client";
 
 interface RunOptions {
   client: Helper
-
 }
 
 type runFun = (req: Request, res: Response, options: RunOptions) => any
 export type RouteType = {
   name: string;
+  api?: boolean;
+  dash?: boolean;
+  middleware?: Array<any>;
+  type?: "put" | "get" | "post";
   run: runFun;
 }

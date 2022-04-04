@@ -49,7 +49,7 @@ export class Helper extends Client {
 
   start() {
     this.registerModules();
-    this.login(process.env.TOKEN);
+    this.login(process.env.DISCORD_BETA_TOKEN);
   }
   async importFile(filePath: string) {
     return (await import(filePath))?.default;

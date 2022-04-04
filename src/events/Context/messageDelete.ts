@@ -11,6 +11,7 @@ import { LogsEmbed } from "../../structures/LogEmbed";
 */
 
 export default new Event(`messageDelete`, async (message) => {
+    if (message.author.bot) return;
     const logsChannel = await getLogsChannel(message.guild);
     if (!logsChannel) return;
     logsChannel.send({

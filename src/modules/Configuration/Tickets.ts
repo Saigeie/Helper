@@ -77,7 +77,7 @@ export const Setup = async (
     })
     .catch(() => {});
 
-  const collector = interaction.channel.createMessageComponentCollector();
+  const collector = interaction.channel.createMessageComponentCollector({ time: 1000 * 60 });
   collector.on("collect", async (i) => {
     if (i.isButton()) {
       if (i.customId === "finsh_button") {
@@ -108,6 +108,20 @@ export const Setup = async (
       }
     }
   });
+  collector.on("end", (c, r) => {
+    interaction
+      .editReply({
+        components: [],
+        embeds: [
+          new Embed({
+            title: `Helper's Ticket System`,
+            description: ` > Please select one of the values from the dropdown below to start its configuration steps!\n\n > Once finshed with your configuration please press the "finsh" button to complete the prompt!`,
+          }),
+        ],
+      })
+      .catch(() => {});
+
+  })
 };
 
 export const UpdateChannel = async (
@@ -184,16 +198,18 @@ export const UpdateChannel = async (
         const channel = interaction.guild.channels.cache.find(
           (c) => c.id === selectedValue
         ) as TextChannel;
-        interaction.editReply({
-          components: [],
-          embeds: [
-            new Embed({
-              title: `Channel Collected`,
-              description: `Your channel choice ( **${channel.name}** ) has successfully been saved to your configuration
+        interaction
+          .editReply({
+            components: [],
+            embeds: [
+              new Embed({
+                title: `Channel Collected`,
+                description: `Your channel choice ( **${channel.name}** ) has successfully been saved to your configuration
           `,
-            }),
-          ],
-        });
+              }),
+            ],
+          })
+          .catch(() => {});
       }
     });
 };
@@ -248,21 +264,23 @@ export const UpdateMessage = async (
             tickets_message: selectedValue.slice(0, 1000),
           }
         );
-        interaction.editReply({
-          components: [],
-          embeds: [
-            new Embed({
-              title: `Message Collected`,
-              description: `Your ticket prompt message has successfully been saved to your configuration`,
-              fields: [
-                {
-                  name: `Message`,
-                  value: `\`\`\`\n${selectedValue.slice(0, 1000)}\n\`\`\``,
-                },
-              ],
-            }),
-          ],
-        });
+        interaction
+          .editReply({
+            components: [],
+            embeds: [
+              new Embed({
+                title: `Message Collected`,
+                description: `Your ticket prompt message has successfully been saved to your configuration`,
+                fields: [
+                  {
+                    name: `Message`,
+                    value: `\`\`\`\n${selectedValue.slice(0, 1000)}\n\`\`\``,
+                  },
+                ],
+              }),
+            ],
+          })
+          .catch(() => {});
       }
     });
 };
@@ -335,21 +353,23 @@ export const UpdateDefaultName = async (
             tickets_default_name: msg,
           }
         );
-        interaction.editReply({
-          components: [],
-          embeds: [
-            new Embed({
-              title: `Name Collected`,
-              description: `Your default channel name has successfully been saved to your configuration`,
-              fields: [
-                {
-                  name: `Name`,
-                  value: `\`\`\`\n${msg}\n\`\`\``,
-                },
-              ],
-            }),
-          ],
-        });
+        interaction
+          .editReply({
+            components: [],
+            embeds: [
+              new Embed({
+                title: `Name Collected`,
+                description: `Your default channel name has successfully been saved to your configuration`,
+                fields: [
+                  {
+                    name: `Name`,
+                    value: `\`\`\`\n${msg}\n\`\`\``,
+                  },
+                ],
+              }),
+            ],
+          })
+          .catch(() => {});
       }
     });
 };
@@ -403,23 +423,24 @@ export const UpdateSupportRole = async (
   const collector = interaction.channel.createMessageComponentCollector({
     componentType: "SELECT_MENU",
   });
-
   let selectedValue;
   collector.on("collect", async (i) => {
     if (i.user.bot || i.user.id !== interaction.user.id) return;
     const value = i.values[0]
     if (value === "create_one") {
-      const role = await i.guild.roles.create({
-        name: `Ticket Support`,
-        color: client.config.colour,
-        hoist: true,
-        mentionable: false,
-      })
+      const role = await i.guild.roles
+        .create({
+          name: `Ticket Support`,
+          color: client.config.colour,
+          hoist: true,
+          mentionable: false,
+        })
       selectedValue = role.id
-    } else { selectedValue = value }
+    } else {
+      selectedValue = value
+    }
     return collector.stop("finshed");
   });
-  if(!selectedValue) collector.stop("error")
   collector.on("end", async (c, r) => {
     if (r === "error") return;
     if (r.toLowerCase() === "finshed") {
@@ -432,16 +453,18 @@ export const UpdateSupportRole = async (
       const role = interaction.guild.roles.cache.find(
         (c) => c.id === selectedValue
       ) as Role;
-      interaction.editReply({
-        components: [],
-        embeds: [
-          new Embed({
-            title: `Role Collected`,
-            description: `Your role choice ( **${role.name}** ) has successfully been saved to your configuration
+      interaction
+        .editReply({
+          components: [],
+          embeds: [
+            new Embed({
+              title: `Role Collected`,
+              description: `Your role choice ( **${role.name}** ) has successfully been saved to your configuration
           `,
-          }),
-        ],
-      });
+            }),
+          ],
+        })
+        .catch(() => {});
     }
   });
 };
@@ -538,16 +561,18 @@ export const UpdateCategory = async (
       const category = interaction.guild.channels.cache.find(
         (c) => c.id === selectedValue
       ) as CategoryChannel;
-      interaction.editReply({
-        components: [],
-        embeds: [
-          new Embed({
-            title: `Category Collected`,
-            description: `Your category choice ( **${category.name}** ) has successfully been saved to your configuration
+      interaction
+        .editReply({
+          components: [],
+          embeds: [
+            new Embed({
+              title: `Category Collected`,
+              description: `Your category choice ( **${category.name}** ) has successfully been saved to your configuration
           `,
-          }),
-        ],
-      });
+            }),
+          ],
+        })
+        .catch(() => {});
     }
   });
 };
@@ -625,16 +650,18 @@ export const UpdateLogsChannel = async (
         const channel = interaction.guild.channels.cache.find(
           (c) => c.id === selectedValue
         ) as TextChannel;
-        interaction.editReply({
-          components: [],
-          embeds: [
-            new Embed({
-              title: `Logs Channel Collected`,
-              description: `Your logs channel choice ( **${channel.name}** ) has successfully been saved to your configuration
+        interaction
+          .editReply({
+            components: [],
+            embeds: [
+              new Embed({
+                title: `Logs Channel Collected`,
+                description: `Your logs channel choice ( **${channel.name}** ) has successfully been saved to your configuration
           `,
-            }),
-          ],
-        });
+              }),
+            ],
+          })
+          .catch(() => {});
       }
     });
 };

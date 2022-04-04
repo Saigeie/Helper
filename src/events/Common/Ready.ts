@@ -23,20 +23,5 @@ export default new Event(`ready`, async () => {
   );
   const clientdata = await ClientData.findOne({ key: `${process.env.SERVER_KEY}`})
   if (!clientdata) await ClientData.create({ key: `${process.env.SERVER_KEY}` });
-  const activites = [
-    { name: "/help", type: "WATCHING" },
-    { name: "https://helper.solar", type: "WATCHING" },
-    { name: `${client.guilds.cache.size} Guilds`, type: "WATCHING" },
-    { name: `${client.users.cache.size} Users!`, type: "WATCHING" },
-    { name: `@helper`, type: "WATCHING" },
-  ] as Array<ActivitiesOptions>
-  
-  client.user.setActivity(activites[0])
-  client.user.setStatus("dnd")
-  let activity = 1;
-  setInterval(() => {
-    if (activity > 5) activity = 0;
-    client.user.setActivity(activites[activity])
-    activity++
-  }, 1000 * 60 * 5)
+  client.user.setActivity({ name: `/help | helper.solar`, type: "PLAYING" })
 })

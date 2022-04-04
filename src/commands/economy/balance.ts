@@ -43,7 +43,7 @@ export default new Command({
         collector.on("collect", (i) => {
             if (i.customId === "view_crates") { 
               const formattedCrates = []
-                   const categories = [];
+              const categories = [];
                 const embeds = []
               userData.crates.forEach((crate: Crate) => {
                   categories.push({ label: `${crate.name} - ${crate.type}`, value: `${crate.id}`})
@@ -82,7 +82,7 @@ export default new Command({
               }
          
               
-                Dropdowns(formattedCrates, i, client, categories, `balcmd_crates`)
+                Dropdowns(formattedCrates, i, client, false, categories, `balcmd_crates`)
                 
             }
         })

@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { MessageActionRow, MessageButton, TextChannel } from "discord.js";
 import { client } from "../..";
 import Guilds from "../../data/schemas/Guilds";
@@ -15,6 +16,7 @@ import buttons from "../../structures/LinkButtons"
 */
 
 export default new Event(`guildCreate`, async (guild) => {
+  client.logger.info(`New server, ${chalk.redBright(`${guild.name}`)} | ${chalk.redBright(`${guild.id}`)} `)
   await Guilds.create({ guildId: guild.id})
   const textChats = guild.channels.cache
     .filter(
@@ -82,8 +84,10 @@ export default new Event(`guildCreate`, async (guild) => {
           })],
         }).then((msg) => messageDelete(msg, 60000))
       });
-    
-    
-    
   }
+  const me = guild.members.cache.find(m => m.id === client.user.id)
+  if (!me) return;
+  me.setNickname(`Helper [BETA]`).catch(() => { })
+  
+
 });

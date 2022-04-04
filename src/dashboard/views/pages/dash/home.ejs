@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/_abstract/root.css" />
+    <link rel="stylesheet" href="/styles/_components/navbar.css" />
+    <link rel="stylesheet" href="/styles/_components/badges.css" />
+    <link rel="stylesheet" href="/styles/_components/buttons.css" />
+    <link rel="stylesheet" href="/styles/_pages/_dash/home.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta content="Helper - Panel" property="og:title" />
+    <meta
+      content="A multipurpose discord bot, that can help you manage & entertain your server."
+      property="og:description"
+    />
+    <meta content="https://helper.solar/discord" property="og:url" />
+    <meta
+      content="https://cdn.discordapp.com/attachments/608608598955917313/959205790856642630/helper_Logo.png"
+      property="og:image"
+    />
+    <meta content="#FF2145" data-react-helmet="true" name="theme-color" />
+    <title>Helper - Panel</title>
+  </head>
+  <body>
+      <div class="nav"><%- include('../../components/navbar'); -%></div>
+      <div class="main">
+          <div class="title">
+              <h1>Select A Server!</h1>
+          </div>
+          <div class="guilds">
+              <% guilds.forEach((guild) => { %>
+                <div class="guild">
+                  <div class="info">
+                      <% if(guild.icon) { %>
+                        <img src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%= guild.icon.replace("a_", "") %>.png?size=4096" alt="<%=guild.name%>'s icon" />
+                      <%} else {%>
+                        <img src="https://cdn.discordapp.com/attachments/957399182115745802/960588244003729469/Solid-Red.png" alt="<%=guild.name%>'s icon">
+                      <%}%>
+                      
+                      <h1 class="guild__name"><%=guild.name%></h1>
+                  </div>
+                  <div class="button">
+                      <% if(guild.joined) { %>
+                            <a href="/dashboard/<%= guild.id %>" class="btn primary">Dashboard</a>
+                      <% } else { %>
+                            <a href="/invite?guildId=<%=guild.id%>" class="btn primary">Add Bot</a>
+                      <% } %>
+                  </div>
+                </div>
+              <% }) %>
+              
+          </div>
+      </div
+  </body>
+</html>
+
+

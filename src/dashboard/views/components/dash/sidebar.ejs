@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="sidebar__main">
+      <div class="sidebar__guild__info">
+        <% if(guild.icon) { %> <img
+        src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%=
+        guild.icon.replace("a_", "") %>.png?size=4096" alt="<%=guild.name%>'s
+        icon" /> <%} else {%>
+        <img
+          src="https://cdn.discordapp.com/attachments/957399182115745802/960588244003729469/Solid-Red.png"
+          alt="<%=guild.name%>'s icon"
+        />
+        <%}%>
+        <h1 class="sidebar__guild__name"><%= guild.name %></h1>
+      </div>
+      <div class="list">
+      <ul class="sidebar__categorys">
+        <li>
+          <a href="/dashboard/<%= guild.id %>" class="active"><i class="fa-solid fa-gear"></i></i><span>Settings</span></a>
+        </li>
+        <li>
+          <a href="/comingsoon" class="active"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a>
+        </li>
+        <li>
+          <a href="/comingsoon" class="active"><i class="fa-solid fa-book"></i></i><span>Logging</span></a>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </body>
+</html>

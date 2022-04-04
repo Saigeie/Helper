@@ -42,6 +42,12 @@ this repository includes, the inital bot itself including its dashboard / web se
 
  All of my files are free to use, but please include the crediting at the top of the files!
  
+# Well known bugs
+
+ To report any bugs please open an issue!
+
+ - Interaction already aknoleadges - tickets (Possible fix, has not been tested )
+
 # Authors & Contributers
 
- - [Saige](https://github.com/Saigeie)* - Owner + Developer
+ - [Saige](https://github.com/Saigeie) - Owner + Developer

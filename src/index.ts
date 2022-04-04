@@ -13,7 +13,7 @@ import chalk from "chalk";
 config();
 export const client = new Helper();
 client.start();
-// Dashboard()
+Dashboard()
 
 console.log(
   chalk.redBright(`

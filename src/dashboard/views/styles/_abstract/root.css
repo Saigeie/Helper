@@ -7,7 +7,8 @@
   --black2: #0b0c0e;
   --black-shadow: rgba(11, 12, 14, 0.4);
   --gray: #02040f;
-  --gray2: #111212;
+  --gray2: #19191c;
+  --gray3: rgb(100, 100, 101);
   --blue: #0c63e7;
   --blue2: #0a85ed;
   --blue3: #0d41e1;
@@ -15,6 +16,8 @@
   --off-white: #f3f3f3;
   --off-white2: #eeeeee;
   --header-font: "Degular", sans-serif;
+  --black-blue: rgb(31, 33, 41);
+  --green: #52b788;
 }
 
 * {

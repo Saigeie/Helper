@@ -1,8 +1,10 @@
+import chalk from "chalk";
 import {
   CommandInteractionOptionResolver,
   GuildMember,
   TextChannel,
 } from "discord.js";
+import ClientData from "../../data/schemas/ClientData";
 import Guilds from "../../data/schemas/Guilds";
 import Tickets from "../../data/schemas/Tickets";
 import Users from "../../data/schemas/Users";
@@ -64,6 +66,12 @@ export default new Event("interactionCreate", async (interaction) => {
       interaction: interaction as Extendedinteraction,
       userData: userData,
     });
+    const oldClientData = await ClientData.findOne({key: `${process.env.SERVER_KEY}`})
+    await ClientData.findOneAndUpdate({ key: `${process.env.SERVER_KEY}` }, {
+      commandsRan: oldClientData.commandsRan + 1
+    })
+
+    client.logger.info(`Command Ran: ${chalk.redBright(command.name)} | Guild: ${interaction.guild.id} | Member: ${interaction.member.user.id}`)
   }
 
   if (interaction.isSelectMenu()) {

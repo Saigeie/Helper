@@ -35,3 +35,25 @@
   transform: scale(1.5);
 }
 
+
+.btn.secondary {
+  border: 2px solid var(--green);
+  color: var(--off-white);
+}
+
+.btn.secondary::before {
+    content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--green);
+  border-radius: 50%;
+  transform: translate3d(0%, 110%, 0);
+  transition: 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.btn.secondary:hover:before,
+.btn.secondary:focus:before {
+  transform: scale(1.5);
+}
+

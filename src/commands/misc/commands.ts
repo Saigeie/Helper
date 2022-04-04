@@ -44,12 +44,14 @@ export default new Command({
         const commandArray = []
         commands.forEach((cmd) => commandArray.push(cmd))
         const cmdPages = []
+        const pageNums = Math.round(commandArray.length / 2)
         for (let i = 0; i < commandArray.length; i++) {
+          console.log(commandArray)
           cmdPages.push(
             new Embed(
               {
                 description: `${randomTip}\n\n${commandArray
-                  .splice(0, 4)
+                  .splice(0, pageNums)
                   .map(
                     (cmd) =>
                       `[**${cmd.name}**](https://helper.solar)\n${

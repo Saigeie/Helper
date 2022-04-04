@@ -22,7 +22,7 @@ export interface Page {
  * Website: https://helper.solar
  * Github: https://github.com/Saigeie
  * 2022
-*/
+ */
 
 const Pagination = async (
   pages: Array<Page>,
@@ -73,16 +73,20 @@ const Pagination = async (
     buttons.components[2].setDisabled(true);
     buttons.components[3].setDisabled(true);
   }
-  const components = []
-  if (dropdown) { components.push(dropdown) }
-  components.push(buttons)
+  const components = [];
+  if (dropdown) {
+    components.push(dropdown);
+  }
+  components.push(buttons);
   interaction.reply({
     ephemeral: true,
     components: components,
     embeds: [firstPage],
   });
   let pageOnEnd;
-  const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
+  const collector = interaction.channel.createMessageComponentCollector({
+    time: 35000,
+  });
   collector.on("collect", async (i) => {
     if (i.user.id !== interaction.user.id || i.user.bot) return;
     let page = 0;
@@ -99,8 +103,7 @@ const Pagination = async (
           page = page > 0 ? --page : 0;
           break;
         case "forward_page":
-          page =
-            page + 1 < currentpages.length ? ++page : currentpages.length;
+          page = page + 1 < currentpages.length ? ++page : currentpages.length;
           break;
       }
       if (page === currentpages.length - 1) {
@@ -149,7 +152,7 @@ const Pagination = async (
         components: components,
         embeds: [currentpages[page]],
       });
-      pageOnEnd = page
+      pageOnEnd = page;
     }
   });
 
@@ -158,11 +161,12 @@ const Pagination = async (
     buttons.components[1].setDisabled(true);
     buttons.components[2].setDisabled(true);
     buttons.components[3].setDisabled(true);
+    dropdown.components[0].setDisabled(true)
     interaction.editReply({
       components: components,
       embeds: [currentpages[pageOnEnd]],
     });
-  })
+  });
 };
 
 export default Pagination;
