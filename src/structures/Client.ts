@@ -24,6 +24,7 @@ const globPromise = promisify(glob);
 
 export class Helper extends Client {
   commands: Collection<string, CommandTypes> = new Collection();
+  commandArray: Array<any>
   logger = Logger;
   config: Config = {
     colour: "#FF2145",
@@ -77,7 +78,7 @@ export class Helper extends Client {
       this.commands.set(command.name, command);
       slashCommands.push(command);
     });
-
+    this.commandArray = slashCommands;
     this.on("ready", () => {
       this.registerCommands({
         guildId: `${process.env.GUILD_ID}`,
