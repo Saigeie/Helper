@@ -38,14 +38,10 @@ body {
   align-items: center;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  background-color: var(--gray1);
+  background-color: var(--gray2);
   padding: 20px;
   border-radius: 20px;
   transition: .3s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.guild:hover {
-    background-color: var(--gray2);
 }
 .guild .info {
   display: flex;
@@ -69,3 +65,20 @@ body {
   color: var(--off-white);
   font-size: 28px;
 }
+
+
+
+@media screen and (max-width: 1000px) {
+  .guild {
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .button a {
+    margin-top: 1rem;
+    margin-right: 6rem;
+  }
+}
+

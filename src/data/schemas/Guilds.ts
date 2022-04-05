@@ -1,5 +1,7 @@
 import { Role, TextChannel } from "discord.js";
 import { Schema, Document, model, Types } from "mongoose";
+import { client } from "../..";
+import { formatPerm } from "../../modules/format";
 
 /**
  * Developer - Saige#8157
@@ -21,6 +23,7 @@ export interface Guild {
   guildId: string;
   owner_key: string;
   premium: boolean;
+  enabled_categories: Array<string>;
   tickets_channel: string;
   tickets_message: string;
   tickets_default_name: string;
@@ -28,7 +31,7 @@ export interface Guild {
   tickets_category: string;
   tickets_logs_channel: string;
   logging_channel: string;
-  logging_events: Array<string>
+  logging_events: Array<string>;
 }
 
 
@@ -36,6 +39,7 @@ const schema = new Schema<Guild>({
   guildId: { type: String },
   owner_key: { type: String },
   premium: { type: Boolean, default: false },
+  enabled_categories: [{ type: String }],
 
   tickets_channel: { type: String },
   tickets_message: {
@@ -46,10 +50,9 @@ const schema = new Schema<Guild>({
   tickets_support_role: { type: String },
   tickets_category: { type: String },
   tickets_logs_channel: { type: String },
-  
-  logging_channel: { type: String },
-  logging_events: [{ type: String }]
 
+  logging_channel: { type: String },
+  logging_events: [{ type: String }],
 });
 
 export default model("Guilds", schema);

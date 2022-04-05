@@ -135,7 +135,7 @@ li {
 
 @media screen  and (max-width: 900px) {
   .nav__burger {
-     position: fixed;
+    position: fixed;
     right: 80%;
     top: 5%;
   }

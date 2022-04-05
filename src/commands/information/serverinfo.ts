@@ -47,7 +47,7 @@ export default new Command({
         embeds: [
           new Embed({
             title: `Current Server Links`,
-            description: ` > **Dashboard**: https://panel.helper.solar/server/${interaction.guild.id}\n > **Premium:** https://helper.solar/premium\n > **Bot Inivte:** https://helper.solar/invite?referal=${interaction.guild.id}`,
+            description: ` > **Dashboard**: https://helper.solar/dashboard/${interaction.guild.id}\n > **Premium:** https://helper.solar/premium\n > **Bot Inivte:** https://helper.solar/invite?referal=${interaction.guild.id}`,
           }),
         ],
       });

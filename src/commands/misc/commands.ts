@@ -46,7 +46,6 @@ export default new Command({
         const cmdPages = []
         const pageNums = Math.round(commandArray.length / 2)
         for (let i = 0; i < commandArray.length; i++) {
-          console.log(commandArray)
           cmdPages.push(
             new Embed(
               {

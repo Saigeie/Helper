@@ -13,6 +13,10 @@
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/JNKKKK/MoreToggles.css@0.2.1/output/moretoggles.min.css"
+    />
     <script
       src="https://kit.fontawesome.com/0e4308e3cd.js"
       crossorigin="anonymous"
@@ -41,47 +45,72 @@
             <p>Custom simple settings for helper! & View Server Information</p>
           </div>
           <form
-            action="/dashboard/<%= guild.id %>/settings?_method=PUT"
+            action="/dashboard/<%= guild.id %>/submit/settings?_method=PUT"
             method="post"
             id="form"
           >
             <div class="input">
               <h1>Nickname</h1>
-              <input type="text" value="<%= nickname %>" name="nickname"/>
+              <input type="text" value="<%= nickname %>" name="nickname" />
             </div>
-        </form>
-            <div class="stats">
-              <div class="stat">
-                <h1 class="stat__title"><%= guildData.premium %></h1>
-                <p class="stat__about">Premium</p>
-              </div>
-              <div class="stat">
-                <h1 class="stat__title">
-                  <%= clientGuild.members.cache.size %>
-                </h1>
-                <p class="stat__about">Members</p>
-              </div>
-              <div class="stat">
-                <h1 class="stat__title">
-                  <%= clientGuild.channels.cache.size %>
-                </h1>
-                <p class="stat__about">Channels</p>
-              </div>
-              <div class="stat">
-                <h1 class="stat__title">
-                  <%= clientGuild.roles.cache.size %>
-                </h1>
-                <p class="stat__about">Roles</p>
-              </div>
-              <div class="stat">
-                <h1 class="stat__title">
-                  <%= Owner.user.tag %>
-                </h1>
-                <p class="stat__about">Owner</p>
+            <div class="subheading">
+              <p>Categories!</p>
+            </div>
+            <div class="divider"></div>
+            <% categories.forEach((cate) => { %>
+            <div class="mt">
+              <div class="mt__title"><h1><%= cate.category %></h1></div>
+              <div class="mt-check-garden">
+                <% if(cate.enabled) {%>
+                <input
+                  id="<%= cate.id %>"
+                  type="checkbox"
+                  name="<%= cate.category %>"
+                  checked
+                />
+                <%} else {%>
+                <input
+                  id="<%= cate.id %>"
+                  type="checkbox"
+                  name="<%= cate.category %>"
+                />
+                <%} %>
+                <label for="<%= cate.id %>"></label>
               </div>
             </div>
-
-            <button form="form"  class="btn secondary mb-5rem">Submit</button>
+            <%})%>
+          </form>
+          <button form="form" class="btn secondary mb-05rem">Submit</button>
+        </div>
+        <div class="box">
+          <div class="box__head">
+            <h1></h1>
+            <p></p>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <h1 class="stat__title"><%= guildData.premium %></h1>
+              <p class="stat__about">Premium</p>
+            </div>
+            <div class="stat">
+              <h1 class="stat__title"><%= clientGuild.members.cache.size %></h1>
+              <p class="stat__about">Members</p>
+            </div>
+            <div class="stat">
+              <h1 class="stat__title">
+                <%= clientGuild.channels.cache.size %>
+              </h1>
+              <p class="stat__about">Channels</p>
+            </div>
+            <div class="stat">
+              <h1 class="stat__title"><%= clientGuild.roles.cache.size %></h1>
+              <p class="stat__about">Roles</p>
+            </div>
+            <div class="stat">
+              <h1 class="stat__title"><%= Owner.user.tag %></h1>
+              <p class="stat__about">Owner</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

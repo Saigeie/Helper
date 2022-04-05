@@ -7,7 +7,11 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="sidebar__main">
+            <div class="nav__burger" id="burger">
+          <div class="burger__line" id="burger_first"></div>
+          <div class="burger__line" id="burger_last"></div>
+        </div>
+    <div class="sidebar__main"  id="nav">
       <div class="sidebar__guild__info">
         <% if(guild.icon) { %> <img
         src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%=
@@ -35,4 +39,16 @@
       </div>
     </div>
   </body>
+    <script>
+    const burger = document.getElementById("burger");
+    const burgerLineFirst = document.getElementById("burger_first");
+    const burgerLineLast = document.getElementById("burger_last");
+    const navMenu = document.getElementById("nav");
+    burger.addEventListener("click", (e) => {
+      e.preventDefault();
+      navMenu.classList.toggle("sidebar__active");
+      burgerLineFirst.classList.toggle(`burger__line__top`)
+      burgerLineLast.classList.toggle(`burger__line__bottom`)
+    });
+  </script>
 </html>

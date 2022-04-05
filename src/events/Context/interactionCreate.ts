@@ -10,6 +10,7 @@ import Tickets from "../../data/schemas/Tickets";
 import Users from "../../data/schemas/Users";
 import { client } from "../../index";
 import { CreateTicket } from "../../modules/Configuration/Tickets";
+import { formatPerm } from "../../modules/format";
 import genKey from "../../modules/genKey";
 import { messageDelete } from "../../modules/messageDelete";
 // import { AddQuarentine } from "../../modules/Moderation/quarentine";
@@ -39,7 +40,15 @@ export default new Event("interactionCreate", async (interaction) => {
     if (!userData) await Users.create({ userId: interaction.member.user.id });
     userData = await Users.findOne({ userId: interaction.member.user.id });
     let guildData = await Guilds.findOne({ guildId: interaction.guild.id });
-    if (!guildData) await Guilds.create({ guildId: interaction.guild.id });
+    const commandCategories = [];
+    client.commands.forEach((cmd) => {
+      if (commandCategories.includes(cmd.category)) return;
+      commandCategories.push(cmd.category);
+    });
+    if (!guildData) await Guilds.create({
+      guildId: interaction.guild.id,
+      enabled_categories: commandCategories,
+    });
     if (command.premium)
       return interaction.reply({
         embeds: [
@@ -59,6 +68,16 @@ export default new Event("interactionCreate", async (interaction) => {
             }),
           ],
         });
+    }
+    if (!guildData.enabled_categories.includes(command.category)) {
+      return interaction.reply({
+        embeds: [
+          new Embed({
+            title: `Category Disabled!`,
+            description: `It appears that \`${command.name}\`'s category has been disabled in the [**dashboard**](https://helper.solar/dashboard/${interaction.guild.id})!`,
+          }),
+        ],
+      });
     }
     command.run({
       args: interaction.options as CommandInteractionOptionResolver,

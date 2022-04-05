@@ -50,7 +50,7 @@ export class Helper extends Client {
 
   start() {
     this.registerModules();
-    this.login(process.env.DISCORD_BETA_TOKEN);
+    this.login(process.env.DISCORD_TOKEN);
   }
   async importFile(filePath: string) {
     return (await import(filePath))?.default;
@@ -81,7 +81,7 @@ export class Helper extends Client {
     this.commandArray = slashCommands;
     this.on("ready", () => {
       this.registerCommands({
-        guildId: `${process.env.GUILD_ID}`,
+        //guildId: `${process.env.GUILD_ID}`,
         commands: slashCommands,
       });
     });
