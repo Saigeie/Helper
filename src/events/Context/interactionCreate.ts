@@ -40,7 +40,7 @@ export default new Event("interactionCreate", async (interaction) => {
     if (!userData) await Users.create({ userId: interaction.member.user.id });
     userData = await Users.findOne({ userId: interaction.member.user.id });
     let guildData = await Guilds.findOne({ guildId: interaction.guild.id });
-    const commandCategories = [];
+    let commandCategories = [];
     client.commands.forEach((cmd) => {
       if (commandCategories.includes(cmd.category)) return;
       commandCategories.push(cmd.category);
@@ -49,6 +49,8 @@ export default new Event("interactionCreate", async (interaction) => {
       guildId: interaction.guild.id,
       enabled_categories: commandCategories,
     });
+    commandCategories = [];
+    guildData = await Guilds.findOne({ guildId: interaction.guild.id });
     if (command.premium)
       return interaction.reply({
         embeds: [
