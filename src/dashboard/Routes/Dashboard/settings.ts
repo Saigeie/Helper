@@ -33,6 +33,7 @@ export default new Route({
     const commandCategories = [];
     let commandId = 0;
     client.commands.forEach((cmd) => {
+      if (cmd.category.toLowerCase() === "owner" || cmd.category.toLowerCase() === "misc") return;
       commandId++;
       let enabled = false;
       const alreadyAdded = commandCategories.filter(

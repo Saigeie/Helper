@@ -129,12 +129,6 @@ export default new Event("interactionCreate", async (interaction) => {
         ],
       });
       const collector = interaction.channel.createMessageCollector();
-      const member = interaction.guild.members.cache.find(
-        (m) => m.id === interaction.user.id
-      );
-      const guildSettings = await Guilds.findOne({
-        guildId: interaction.guild.id,
-      });
       let mentionedMember;
       collector.on("collect", (msg) => {
         if (
